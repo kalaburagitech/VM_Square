@@ -15,10 +15,10 @@ export function IndustriesPreview() {
   return (
     <section className="py-24 bg-vmdark text-vmlight relative">
       <div className="absolute inset-0 bg-vmnavy/90 z-0"></div>
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}

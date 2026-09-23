@@ -1,6 +1,3 @@
-export const dynamic = "force-dynamic";
-import Metadata from "next";
-import { db } from "@/lib/db";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Calendar, User, ArrowRight } from "lucide-react";
@@ -37,13 +34,9 @@ const defaultPosts = [
   },
 ];
 
-export default async function BlogPage() {
-  const dbPosts = await db.blogPost.findMany({
-    where: { status: "Published" },
-    orderBy: { createdAt: "desc" },
-  }).catch(() => []);
+export default function BlogPage() {
+  const posts = defaultPosts;
 
-  const posts = dbPosts.length > 0 ? dbPosts : defaultPosts;
 
   return (
     <div className="bg-slate-50 min-h-screen">

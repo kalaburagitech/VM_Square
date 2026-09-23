@@ -55,19 +55,21 @@ export function TechnologyMonitoring() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+            className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl border border-white/10 group"
           >
-            {/* Placeholder image for Command Center */}
-            <div className="absolute inset-0 bg-slate-800 flex items-center justify-center">
-              <span className="text-slate-400 font-medium">Command Center Image Placeholder</span>
-            </div>
-            
+            <img
+              src="/images/command_center.jpg"
+              alt="VM SQUARE 24/7 Command & Control Center"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+
             {/* Overlay UI elements simulating tech */}
-            <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-lg border border-vmgold/30 flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-xs font-mono text-green-400">SYSTEMS NOMINAL</span>
+            <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-md p-3 rounded-lg border border-amber-400/40 flex items-center gap-3 shadow-lg">
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+              <span className="text-xs font-mono text-emerald-400 font-bold">MONITORING ACTIVE</span>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

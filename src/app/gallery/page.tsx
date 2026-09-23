@@ -1,8 +1,5 @@
-export const dynamic = "force-dynamic";
-import Metadata from "next";
-import { db } from "@/lib/db";
 import { PublicGalleryGrid, GalleryMediaItem } from "@/components/gallery/PublicGalleryGrid";
-import { Camera, ShieldCheck, Video as VideoIcon } from "lucide-react";
+import { Camera } from "lucide-react";
 
 export const metadata = {
   title: "Media Gallery | VM SQUARE Security & Manpower Services",
@@ -11,93 +8,119 @@ export const metadata = {
 
 const sampleGalleryItems: GalleryMediaItem[] = [
   {
-    id: "sample-1",
-    title: "Manned Guarding Briefing Session",
-    description: "Daily operational briefing and equipment inspection for security guards before shift deployment.",
+    id: "vmsquare-cmd-1",
+    title: "VM SQUARE 24/7 Command & Operations Control Room",
+    description: "Multi-monitor real-time CCTV surveillance command center staffed by trained VM SQUARE personnel with active site security & telemetry monitoring.",
     mediaType: "IMAGE",
-    url: "https://images.unsplash.com/photo-1541888000424-74742e47833a?auto=format&fit=crop&q=80&w=1200",
+    url: "/images/command_center.jpg",
     thumbnailUrl: null,
-    category: "Security Personnel",
+    category: "Command Center",
     isFeatured: true,
     isActive: true,
   },
   {
-    id: "sample-2",
-    title: "Fire Safety & Emergency Response Drill",
-    description: "Hands-on fire extinguisher training and emergency evacuation drill conducted for site supervisors.",
+    id: "vmsquare-corp-2",
+    title: "Corporate Office Tower Guard & Mobile Patrol Unit",
+    description: "Uniformed VM SQUARE security officer equipped with radio headset stationed at corporate headquarters with branded mobile patrol vehicle.",
     mediaType: "IMAGE",
-    url: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&q=80&w=1200",
+    url: "/images/corporate_guard.jpg",
     thumbnailUrl: null,
-    category: "Training",
+    category: "Corporate Security",
     isFeatured: true,
     isActive: true,
   },
   {
-    id: "sample-3",
-    title: "24/7 Command Center Monitoring",
-    description: "High-definition CCTV and electronic surveillance monitoring operating around the clock.",
+    id: "vmsquare-guard-1",
+    title: "Official VM SQUARE Uniformed Security Officer",
+    description: "Standard duty deployment uniform featuring light blue shirt with embroidered chest logo, dark tie, shoulder epaulettes, and black VM SQUARE cap.",
     mediaType: "IMAGE",
-    url: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?auto=format&fit=crop&q=80&w=1200",
+    url: "/images/gallery/vmsquare_guard_front.jpg",
     thumbnailUrl: null,
-    category: "Operations",
-    isFeatured: false,
+    category: "Official Uniform",
+    isFeatured: true,
     isActive: true,
   },
   {
-    id: "sample-4",
-    title: "Industrial Site Patrol Demonstration",
-    description: "Mobile security patrol conducting night perimeter security checks at an industrial manufacturing plant.",
+    id: "vmsquare-guard-2",
+    title: "Night Facility Patrol & Perimeter Vigilance",
+    description: "VM SQUARE security officer performing night inspection with branded uniform shirt, cap, radio headset, and flashlight.",
+    mediaType: "IMAGE",
+    url: "/images/gallery/vmsquare_patrol_guard.jpg",
+    thumbnailUrl: null,
+    category: "Site Patrol",
+    isFeatured: true,
+    isActive: true,
+  },
+  {
+    id: "ai-gallery-3",
+    title: "Industrial Plant Perimeter Inspection",
+    description: "Equipped security officer patrolling logistics bay and warehouse perimeter.",
+    mediaType: "IMAGE",
+    url: "/images/gallery/industrial_guard.jpg",
+    thumbnailUrl: null,
+    category: "Industrial Security",
+    isFeatured: true,
+    isActive: true,
+  },
+  {
+    id: "ai-video-1",
+    title: "Rapid Emergency Response & Fire Drill Video",
+    description: "Live operational video demonstration of security guard emergency protocols and squad response.",
     mediaType: "VIDEO",
     url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-    thumbnailUrl: "https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&q=80&w=1200",
-    category: "Operations",
+    thumbnailUrl: "/images/gallery/industrial_guard.jpg",
+    category: "Operations Video",
     isFeatured: true,
     isActive: true,
   },
   {
-    id: "sample-5",
-    title: "Corporate Event Access Control",
-    description: "Specialized event security team managing VIP access control and crowd management.",
+    id: "ai-gallery-4",
+    title: "Corporate Event Access Control & Crowd Management",
+    description: "Event security team conducting credential scanner checks at high-level leadership summit entrance.",
     mediaType: "IMAGE",
-    url: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=1200",
+    url: "/images/gallery/event_security.jpg",
     thumbnailUrl: null,
-    category: "Events",
+    category: "Event Security",
     isFeatured: false,
     isActive: true,
   },
   {
-    id: "sample-6",
-    title: "VM SQUARE Field Officers Squad",
-    description: "Our senior field officers and supervisors dedicated to quality assurance and client site audits.",
+    id: "ai-gallery-5",
+    title: "Night Perimeter Security Patrol Unit",
+    description: "Dedicated night security response vehicle stationed for alarm response and commercial facility surveillance.",
     mediaType: "IMAGE",
-    url: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1200",
+    url: "/images/gallery/patrol_vehicle.jpg",
     thumbnailUrl: null,
-    category: "Team",
+    category: "Mobile Patrol",
+    isFeatured: false,
+    isActive: true,
+  },
+  {
+    id: "ai-gallery-6",
+    title: "VIP Executive Protection & Escort Detail",
+    description: "Specialized close-protection officers providing secure transport and executive escort detail.",
+    mediaType: "IMAGE",
+    url: "/images/gallery/vip_protection.jpg",
+    thumbnailUrl: null,
+    category: "Executive Protection",
+    isFeatured: true,
+    isActive: true,
+  },
+  {
+    id: "ai-video-2",
+    title: "Perimeter Security Escort & Patrol Inspection Video",
+    description: "Video walkthrough of field supervisor audits and high-vigilance site inspection.",
+    mediaType: "VIDEO",
+    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+    thumbnailUrl: "/images/gallery/patrol_vehicle.jpg",
+    category: "Operations Video",
     isFeatured: true,
     isActive: true,
   },
 ];
 
-export default async function GalleryPage() {
-  const dbItems = await db.galleryImage.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-  }).catch(() => []);
+export default function GalleryPage() {
 
-  const galleryItems: GalleryMediaItem[] =
-    dbItems.length > 0
-      ? dbItems.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          description: item.description || null,
-          mediaType: item.mediaType || "IMAGE",
-          url: item.url,
-          thumbnailUrl: item.thumbnailUrl || null,
-          category: item.category || "Operations",
-          isFeatured: item.isFeatured || false,
-          isActive: item.isActive ?? true,
-        }))
-      : sampleGalleryItems;
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -127,8 +150,9 @@ export default async function GalleryPage() {
 
       {/* Main Content */}
       <section className="py-16 container mx-auto px-4 md:px-6">
-        <PublicGalleryGrid initialItems={galleryItems} />
+        <PublicGalleryGrid initialItems={sampleGalleryItems} />
       </section>
     </div>
   );
 }
+

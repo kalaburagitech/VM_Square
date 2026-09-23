@@ -1,6 +1,5 @@
 "use server";
 
-import { db } from "@/lib/db";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -19,11 +18,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
       message: formData.get("message") as string,
     };
 
-    const validatedData = contactSchema.parse(rawData);
-
-    await db.enquiry.create({
-      data: validatedData,
-    });
+    contactSchema.parse(rawData);
 
     return { success: true, message: "Thank you for contacting us. We will get back to you shortly." };
   } catch (error) {
@@ -50,11 +45,7 @@ const quoteSchema = z.object({
 export async function submitQuoteRequest(prevState: any, formData: FormData) {
   try {
     const rawData = Object.fromEntries(formData.entries());
-    const validatedData = quoteSchema.parse(rawData);
-
-    await db.quoteRequest.create({
-      data: validatedData,
-    });
+    quoteSchema.parse(rawData);
 
     return { success: true, message: "Quote request submitted successfully." };
   } catch (error) {
@@ -79,11 +70,7 @@ const careerSchema = z.object({
 export async function submitCareerApplication(prevState: any, formData: FormData) {
   try {
     const rawData = Object.fromEntries(formData.entries());
-    const validatedData = careerSchema.parse(rawData);
-
-    await db.careerApplication.create({
-      data: validatedData,
-    });
+    careerSchema.parse(rawData);
 
     return { success: true, message: "Application submitted successfully." };
   } catch (error) {
@@ -93,3 +80,4 @@ export async function submitCareerApplication(prevState: any, formData: FormData
     return { success: false, message: "Something went wrong. Please try again." };
   }
 }
+

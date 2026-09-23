@@ -59,14 +59,20 @@ export function AboutSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl"
+            className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group"
           >
-            <div className="absolute inset-0 bg-vmdark/20 z-10"></div>
-            {/* Placeholder image */}
-            <div className="absolute inset-0 bg-slate-300 animate-pulse flex items-center justify-center">
-              <span className="text-slate-500 font-medium">Corporate Security Image Placeholder</span>
+            <img
+              src="/images/corporate_guard.jpg"
+              alt="VM SQUARE Corporate Security Officer"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+            <div className="absolute bottom-6 left-6 right-6 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-white/30 shadow-lg">
+              <span className="text-xs font-bold text-amber-600 uppercase tracking-wider block">Corporate Vigilance</span>
+              <p className="text-sm font-bold text-slate-900 mt-0.5">Verified Security Officers & Branded Patrol Units</p>
             </div>
           </motion.div>
+
         </div>
       </div>
     </section>

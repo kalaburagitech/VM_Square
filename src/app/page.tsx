@@ -8,7 +8,6 @@ import { WhyChooseUs } from "@/components/home/WhyChooseUs";
 import { SecurityOperations } from "@/components/home/SecurityOperations";
 import { TechnologyMonitoring } from "@/components/home/TechnologyMonitoring";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
-import { CareersPreview } from "@/components/home/CareersPreview";
 
 export default function Home() {
   return (
@@ -23,7 +22,6 @@ export default function Home() {
       <SecurityOperations />
       <TechnologyMonitoring />
       <GalleryPreview />
-      <CareersPreview />
     </div>
   );
 }

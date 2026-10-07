@@ -24,7 +24,6 @@ export function Header() {
     { name: "Services", href: "/services" },
     { name: "Industries", href: "/industries" },
     { name: "Gallery", href: "/gallery" },
-    { name: "Careers", href: "/careers" },
     { name: "Contact", href: "/contact" },
   ];
 
@@ -38,24 +37,16 @@ export function Header() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Company Logo & Highlighted Branding */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative p-1 rounded-xl bg-white/10 backdrop-blur-sm border border-amber-400/30 group-hover:border-amber-400 transition-all shadow-md group-hover:shadow-amber-500/20">
+          <Link href="/" className="flex items-center group">
+            <div className="relative px-3 py-1.5 rounded-xl bg-white shadow-lg border border-amber-400/40 group-hover:border-amber-400 transition-all group-hover:shadow-amber-500/20 flex items-center justify-center">
               <Image
                 src="/logo.png"
-                alt="VM SQUARE Logo"
-                width={48}
-                height={48}
-                className="h-10 w-auto object-contain rounded-lg"
+                alt="VM SQUARE Security Services Logo"
+                width={200}
+                height={44}
+                className="h-9 md:h-11 w-auto object-contain"
                 priority
               />
-            </div>
-            <div>
-              <span className="font-extrabold text-xl md:text-2xl tracking-tight text-white block leading-none">
-                VM <span className="text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.4)]">SQUARE</span>
-              </span>
-              <span className="text-[0.65rem] md:text-[0.7rem] text-amber-300/90 uppercase tracking-widest font-semibold block mt-0.5">
-                Security & Manpower
-              </span>
             </div>
           </Link>
 

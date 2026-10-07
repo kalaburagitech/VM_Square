@@ -76,7 +76,7 @@ npm run start
 
 ## Features Implemented
 
-*   **Public Site:** Homepage, About Us, Services, Industries, Careers, Contact, Quote Requests.
+*   **Public Site:** Homepage, About Us, Services, Industries, Contact, Quote Requests.
 *   **Dynamic Data Sources:** Content mapped to backend database tables (Services, Industries, Clients, Testimonials, FAQ).
-*   **Admin Dashboard:** Comprehensive dashboard to view form submissions, lead generation data (Quotes & Enquiries), and career applications.
+*   **Admin Dashboard:** Comprehensive dashboard to view form submissions and lead generation data (Quotes & Enquiries).
 *   **Security:** Hashed passwords with bcrypt, robust API security with Zod, and middleware-protected admin routes.

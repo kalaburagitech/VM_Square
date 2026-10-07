@@ -16,8 +16,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VM SQUARE SECURITY & MANPOWER SERVICES",
+  title: "VM SQUARE SECURITY SERVICES",
   description: "Professional Security & Manpower Solutions for Businesses, Communities & Industries.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/logo-icon.png",
+  },
 };
 
 export default function RootLayout({

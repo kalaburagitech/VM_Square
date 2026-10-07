@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
         <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-6 text-slate-700 text-sm leading-relaxed">
           <h2 className="text-xl font-bold text-[#0B132B]">1. Information Collection</h2>
           <p>
-            VM SQUARE Security & Manpower Services Pvt. Ltd. collects personal information (such as name, phone number, email address, and service details) solely for the purpose of providing security quotes, processing career applications, and managing client services.
+            VM SQUARE Security & Manpower Services Pvt. Ltd. collects personal information (such as name, phone number, email address, and service details) solely for the purpose of providing security quotes, addressing inquiries, and managing client services.
           </p>
 
           <h2 className="text-xl font-bold text-[#0B132B]">2. Data Usage & Confidentiality</h2>

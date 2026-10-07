@@ -198,7 +198,6 @@ export default function ContactPage() {
                       <option value="General Inquiry">General Security Inquiry</option>
                       <option value="Guard Replacement">Guard Replacement & Audits</option>
                       <option value="Billing & Invoicing">Billing & Compliance</option>
-                      <option value="Career Application Inquiry">Career / Job Application</option>
                     </select>
                   </div>
 

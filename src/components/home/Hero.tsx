@@ -20,11 +20,11 @@ export function Hero() {
           {/* ISO Badge */}
           <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-900/80 text-amber-400 border border-amber-500/50 font-semibold text-xs sm:text-sm shadow-xl backdrop-blur-md">
             <Image
-              src="/logo.png"
-              alt="VM SQUARE Logo"
+              src="/logo-icon.png"
+              alt="VM SQUARE Icon"
               width={24}
               height={24}
-              className="h-6 w-auto object-contain rounded"
+              className="h-6 w-6 object-contain rounded bg-white p-0.5"
             />
             <span>ISO Certified Security & Manpower Services</span>
           </div>

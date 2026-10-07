@@ -56,28 +56,3 @@ export async function submitQuoteRequest(prevState: any, formData: FormData) {
   }
 }
 
-const careerSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  mobile: z.string().min(10, "Valid mobile number is required"),
-  email: z.string().email("Invalid email address"),
-  location: z.string().min(2, "Location is required"),
-  position: z.string().min(2, "Position is required"),
-  experience: z.string().min(1, "Experience is required"),
-  qualification: z.string().min(2, "Qualification is required"),
-  message: z.string().optional(),
-});
-
-export async function submitCareerApplication(prevState: any, formData: FormData) {
-  try {
-    const rawData = Object.fromEntries(formData.entries());
-    careerSchema.parse(rawData);
-
-    return { success: true, message: "Application submitted successfully." };
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return { success: false, errors: error.flatten().fieldErrors };
-    }
-    return { success: false, message: "Something went wrong. Please try again." };
-  }
-}
-

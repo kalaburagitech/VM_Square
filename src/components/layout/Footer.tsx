@@ -14,23 +14,15 @@ export function Footer() {
           
           {/* 1. Company Info & Social Media */}
           <div className="sm:col-span-2 md:col-span-3 lg:col-span-1 space-y-4">
-            <Link href="/" className="flex items-center gap-3 group mb-2">
-              <div className="p-1 rounded-xl bg-white/10 backdrop-blur-sm border border-amber-400/30 group-hover:border-amber-400 transition-all shadow-md">
+            <Link href="/" className="inline-flex items-center group mb-2">
+              <div className="relative px-3 py-1.5 rounded-xl bg-white shadow-md border border-amber-400/40 group-hover:border-amber-400 transition-all flex items-center justify-center">
                 <Image
                   src="/logo.png"
-                  alt="VM SQUARE Logo"
-                  width={44}
-                  height={44}
-                  className="h-10 w-auto object-contain rounded-lg"
+                  alt="VM SQUARE Security Services Logo"
+                  width={180}
+                  height={40}
+                  className="h-8 md:h-10 w-auto object-contain"
                 />
-              </div>
-              <div>
-                <span className="font-extrabold text-xl tracking-tight text-white block leading-none">
-                  VM <span className="text-amber-400">SQUARE</span>
-                </span>
-                <span className="text-[0.65rem] text-amber-300/90 uppercase tracking-widest font-semibold block mt-0.5">
-                  Security & Manpower
-                </span>
               </div>
             </Link>
 
@@ -116,8 +108,6 @@ export function Footer() {
                 { name: "About Us", href: "/about" },
                 { name: "Valued Clients", href: "/clients" },
                 { name: "Media Gallery", href: "/gallery" },
-                { name: "Careers", href: "/careers" },
-                { name: "Blog & News", href: "/blog" },
                 { name: "Contact Operations", href: "/contact" },
                 { name: "Request Quote", href: "/request-quote" },
               ].map((link) => (

@@ -24,7 +24,6 @@ export function Header() {
     { name: "Services", href: "/services" },
     { name: "Industries", href: "/industries" },
     { name: "Gallery", href: "/gallery" },
-    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -61,11 +60,12 @@ export function Header() {
                 {link.name}
               </Link>
             ))}
+
             <Button
-              render={<Link href="/request-quote" />}
-              className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold shadow-lg shadow-amber-500/20 hover:shadow-amber-500/40 border-0 transition-all transform hover:-translate-y-0.5"
+              render={<Link href="/contact" />}
+              className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-sm px-6 py-2.5 rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 border-0 transition-all transform hover:-translate-y-0.5"
             >
-              Request a Quote
+              Contact Us
             </Button>
           </nav>
 
@@ -97,10 +97,10 @@ export function Header() {
             </Link>
           ))}
           <Button
-            render={<Link href="/request-quote" onClick={() => setIsMobileMenuOpen(false)} />}
-            className="mt-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold w-full shadow-lg"
+            render={<Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} />}
+            className="mt-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-extrabold w-full shadow-lg py-3 rounded-xl"
           >
-            Request a Quote
+            Contact Us
           </Button>
         </div>
       </div>

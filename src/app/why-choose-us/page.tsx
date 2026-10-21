@@ -38,12 +38,9 @@ export default function WhyChooseUsPage() {
           <p className="text-white/90 text-base">
             Contact our expert team today to schedule a comprehensive site risk assessment and receive a customized security proposal.
           </p>
-          <div className="flex justify-center gap-4 pt-2">
-            <Button render={<Link href="/request-quote" />} size="lg" className="bg-vmdark hover:bg-vmdark/90 text-white font-bold">
-              Request a Free Quote <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-            <Button render={<Link href="/contact" />} size="lg" variant="outline" className="border-white text-foreground hover:bg-white hover:text-vmdark">
-              Contact Us
+          <div className="flex justify-center pt-2">
+            <Button render={<Link href="/contact" />} size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold px-8 rounded-xl shadow-xl">
+              Contact Us <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
         </div>

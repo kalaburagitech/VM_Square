@@ -16,11 +16,41 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "VM SQUARE SECURITY SERVICES",
-  description: "Professional Security & Manpower Solutions for Businesses, Communities & Industries.",
+  metadataBase: new URL("https://vmsquaresecurity.com"),
+  title: {
+    default: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD.",
+    template: "%s | VM SQUARE Security Services",
+  },
+  description: "ISO Certified Security & Manpower Solutions in Bengaluru & Karnataka. Professional manned guarding, corporate security, facility management, and industrial protection.",
+  keywords: [
+    "Security Services Bengaluru",
+    "Security Guard Agency Bangalore",
+    "Manpower Services Karnataka",
+    "Corporate Security Guard",
+    "Industrial Security Services",
+    "VM SQUARE Security",
+    "Facility Management Bangalore",
+  ],
+  authors: [{ name: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD." }],
+  creator: "VM SQUARE",
+  alternates: {
+    canonical: "https://vmsquaresecurity.com",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "https://vmsquaresecurity.com",
+    title: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD.",
+    description: "Professional Security & Facility Management Services across Karnataka. 24/7 Helpline & Rapid Response.",
+    siteName: "VM SQUARE Security",
+  },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/logo-icon.png",
+    icon: [
+      { url: "/logo-icon.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/logo-icon.png",
+    apple: "/logo.png",
   },
 };
 

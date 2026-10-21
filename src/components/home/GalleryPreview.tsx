@@ -1,38 +1,22 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Camera, Play, ArrowRight } from "lucide-react";
 
+import { galleryItems } from "@/lib/gallery-data";
+
+// Featured highlight items showing the exact same updated images that exist inside the gallery
 const highlightedMedia = [
-  {
-    id: "g1",
-    title: "VM SQUARE 24/7 Command Center Operations",
-    category: "Command Center",
-    type: "IMAGE",
-    image: "/images/command_center.jpg",
-  },
-  {
-    id: "g2",
-    title: "Corporate Office Tower Guard Patrol",
-    category: "Corporate Security",
-    type: "IMAGE",
-    image: "/images/corporate_guard.jpg",
-  },
-  {
-    id: "g3",
-    title: "Night Facility Patrol Inspection",
-    category: "Site Patrol",
-    type: "IMAGE",
-    image: "/images/gallery/vmsquare_patrol_guard.jpg",
-  },
-  {
-    id: "g4",
-    title: "Emergency Response & Fire Safety Drill",
-    category: "Operations Video",
-    type: "VIDEO",
-    image: "/images/gallery/industrial_guard.jpg",
-  },
-];
+  galleryItems.find((item) => item.id === "vmsquare-cmd-1") || galleryItems[0],
+  galleryItems.find((item) => item.id === "vmsquare-courtyard-train") || galleryItems[1],
+  galleryItems.find((item) => item.id === "vmsquare-fire-safety") || galleryItems[2],
+  galleryItems.find((item) => item.id === "vmsquare-corp-2") || galleryItems[3],
+].map((item) => ({
+  id: item.id,
+  title: item.title,
+  category: item.category,
+  type: item.mediaType,
+  image: item.thumbnailUrl || item.url,
+}));
 
 export function GalleryPreview() {
   return (
@@ -74,13 +58,12 @@ export function GalleryPreview() {
               href="/gallery"
               className="group relative rounded-2xl overflow-hidden bg-slate-800 border border-slate-700/80 shadow-xl hover:border-amber-400/60 transition-all duration-300 transform hover:-translate-y-1 block"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-slate-950">
-                <Image
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-950">
+                <img
                   src={item.image}
                   alt={item.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="eager"
                 />
 
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-80 group-hover:opacity-70 transition-opacity"></div>

@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { Play, Maximize2, ShieldCheck, Flame, Video as VideoIcon, Layers } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface GalleryMediaItem {
   id: string;
@@ -9,50 +12,191 @@ export interface GalleryMediaItem {
   description: string | null;
   mediaType: "IMAGE" | "VIDEO";
   url: string;
-  thumbnailUrl: string | null;
+  thumbnailUrl?: string | null;
   category: string;
-  isFeatured: boolean;
-  isActive: boolean;
+  isFeatured?: boolean;
+  isActive?: boolean;
 }
 
 export function PublicGalleryGrid({ initialItems }: { initialItems: GalleryMediaItem[] }) {
   const [selectedItem, setSelectedItem] = useState<GalleryMediaItem | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string>("ALL");
+
+  // Extract unique categories
+  const categories = ["ALL", ...Array.from(new Set(initialItems.map((item) => item.category)))];
+
+  const filteredItems = activeCategory === "ALL" 
+    ? initialItems 
+    : initialItems.filter((item) => item.category === activeCategory);
 
   return (
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {initialItems.map((item) => (
-          <div 
-            key={item.id} 
-            className="cursor-pointer group relative rounded-lg overflow-hidden border border-gray-200 aspect-video"
-            onClick={() => setSelectedItem(item)}
-          >
-            <img 
-              src={item.thumbnailUrl || item.url} 
-              alt={item.title} 
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" 
-            />
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-              <h3 className="text-white font-medium truncate">{item.title}</h3>
-            </div>
-          </div>
-        ))}
+    <div className="space-y-10">
+      {/* Category Filter Tabs */}
+      <div className="flex flex-wrap items-center justify-center gap-2.5">
+        {categories.map((category) => {
+          const count = category === "ALL" 
+            ? initialItems.length 
+            : initialItems.filter((item) => item.category === category).length;
+          const isActive = activeCategory === category;
+
+          return (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 ${
+                isActive
+                  ? "bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/20 scale-105"
+                  : "bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/60"
+              }`}
+            >
+              <span>{category}</span>
+              <span
+                className={`px-1.5 py-0.5 rounded-full text-[10px] font-mono ${
+                  isActive ? "bg-slate-950 text-amber-400" : "bg-slate-800 text-slate-400"
+                }`}
+              >
+                {count}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
+      {/* Grid of Gallery Cards */}
+      <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <AnimatePresence>
+          {filteredItems.map((item) => {
+            const displayImg = item.thumbnailUrl || item.url;
+            return (
+              <motion.div
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
+                key={item.id}
+                onClick={() => setSelectedItem(item)}
+                className="group relative cursor-pointer rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 hover:border-amber-500/50 shadow-xl hover:shadow-2xl hover:shadow-amber-500/10 transition-all duration-300 transform hover:-translate-y-1 flex flex-col"
+              >
+                {/* Image Container */}
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
+                  <img
+                    src={displayImg}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+
+                  {/* Category Badge */}
+                  <div className="absolute top-3 left-3 z-10">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-slate-950/90 text-amber-400 border border-amber-500/30 backdrop-blur-md shadow-md">
+                      {item.category.includes("Fire") || item.title.includes("Fire") ? (
+                        <Flame className="h-3 w-3 text-amber-400" />
+                      ) : item.mediaType === "VIDEO" ? (
+                        <VideoIcon className="h-3 w-3 text-amber-400" />
+                      ) : (
+                        <ShieldCheck className="h-3 w-3 text-amber-400" />
+                      )}
+                      <span>{item.category}</span>
+                    </span>
+                  </div>
+
+                  {/* Expand / View Hint on Hover */}
+                  <div className="absolute top-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="h-8 w-8 rounded-full bg-slate-950/90 text-amber-400 flex items-center justify-center border border-amber-400/40 shadow-lg">
+                      <Maximize2 className="h-4 w-4" />
+                    </div>
+                  </div>
+
+                  {/* Video Play Badge */}
+                  {item.mediaType === "VIDEO" && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="h-14 w-14 rounded-full bg-amber-500/90 text-slate-950 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                        <Play className="h-6 w-6 fill-current ml-0.5" />
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Card Info */}
+                <div className="p-5 flex-1 flex flex-col justify-between bg-slate-900/95 border-t border-slate-800">
+                  <div>
+                    <h3 className="font-bold text-base sm:text-lg text-white group-hover:text-amber-400 transition-colors line-clamp-1">
+                      {item.title}
+                    </h3>
+                    {item.description && (
+                      <p className="mt-2 text-xs text-slate-300 leading-relaxed line-clamp-2">
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-amber-400/90 font-medium">
+                    <span className="flex items-center gap-1 group-hover:underline">
+                      Click to expand
+                    </span>
+                    <span className="text-[11px] text-slate-500 uppercase tracking-wider font-mono">
+                      {item.mediaType}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Lightbox Dialog Modal */}
       <Dialog open={!!selectedItem} onOpenChange={(open) => !open && setSelectedItem(null)}>
-        <DialogContent className="max-w-4xl bg-black border-gray-800 text-white p-0 overflow-hidden">
-          <DialogTitle className="sr-only">{selectedItem?.title}</DialogTitle>
-          <DialogDescription className="sr-only">{selectedItem?.description}</DialogDescription>
+        <DialogContent className="max-w-4xl bg-slate-950 border border-amber-500/40 text-white p-0 overflow-hidden shadow-2xl rounded-2xl">
+          <DialogTitle className="sr-only">{selectedItem?.title || "Gallery Media"}</DialogTitle>
+          <DialogDescription className="sr-only">
+            {selectedItem?.description || "High resolution media view"}
+          </DialogDescription>
+
           {selectedItem && (
-            <div className="relative aspect-video">
-              {selectedItem.mediaType === "IMAGE" ? (
-                <img src={selectedItem.url} alt={selectedItem.title} className="w-full h-full object-contain" />
-              ) : (
-                <video src={selectedItem.url} controls className="w-full h-full object-contain" autoPlay />
-              )}
-              <div className="absolute bottom-0 left-0 right-0 bg-black/50 p-4">
-                <h3 className="font-semibold text-lg">{selectedItem.title}</h3>
-                {selectedItem.description && <p className="text-sm text-gray-300">{selectedItem.description}</p>}
+            <div className="flex flex-col">
+              {/* Media Display Area */}
+              <div className="relative aspect-[16/10] sm:aspect-video w-full bg-black flex items-center justify-center overflow-hidden">
+                {selectedItem.mediaType === "IMAGE" ? (
+                  <img
+                    src={selectedItem.url}
+                    alt={selectedItem.title}
+                    className="w-full h-full object-contain max-h-[75vh]"
+                  />
+                ) : (
+                  <video
+                    src={selectedItem.url}
+                    controls
+                    className="w-full h-full object-contain max-h-[75vh]"
+                    autoPlay
+                  />
+                )}
+              </div>
+
+              {/* Media Details Footer */}
+              <div className="p-5 sm:p-6 bg-slate-900/95 border-t border-slate-800 space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/40">
+                    {selectedItem.category}
+                  </span>
+                  <span className="text-xs text-slate-400 font-mono uppercase">
+                    • {selectedItem.mediaType}
+                  </span>
+                </div>
+
+                <h3 className="font-extrabold text-lg sm:text-xl text-white">
+                  {selectedItem.title}
+                </h3>
+
+                {selectedItem.description && (
+                  <p className="text-sm text-slate-300 leading-relaxed pt-1">
+                    {selectedItem.description}
+                  </p>
+                )}
               </div>
             </div>
           )}

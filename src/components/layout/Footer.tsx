@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { COMPANY_INFO } from "@/lib/company-info";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -108,8 +109,7 @@ export function Footer() {
                 { name: "About Us", href: "/about" },
                 { name: "Valued Clients", href: "/clients" },
                 { name: "Media Gallery", href: "/gallery" },
-                { name: "Contact Operations", href: "/contact" },
-                { name: "Request Quote", href: "/request-quote" },
+                { name: "Contact Us", href: "/contact" },
               ].map((link) => (
                 <li key={link.name}>
                   <Link href={link.href} className="text-slate-300 hover:text-amber-400 transition-colors flex items-center gap-2">
@@ -124,32 +124,65 @@ export function Footer() {
           {/* 5. Contact Information */}
           <div className="space-y-4">
             <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-4 text-amber-400">Contact Info</h3>
-            <ul className="space-y-3 text-xs sm:text-sm">
+            <ul className="space-y-3.5 text-xs sm:text-sm">
+              {/* Clickable & Copyable Address */}
               <li className="flex items-start gap-2.5 text-slate-300">
                 <MapPin className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                <span>
-                  #45, Commercial Complex, MG Road,<br />
-                  Bengaluru, Karnataka - 560001
-                </span>
-              </li>
-              <li className="flex items-center gap-2.5 text-slate-300">
-                <Phone className="h-4 w-4 text-amber-400 shrink-0" />
-                <a href="tel:+919880012345" className="hover:text-amber-400 font-medium transition-colors">
-                  +91 98800 12345
+                <a
+                  href={COMPANY_INFO.address.googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-amber-400 transition-colors leading-relaxed block"
+                  title="Open location on Google Maps"
+                >
+                  <span>{COMPANY_INFO.address.building},</span><br />
+                  <span>{COMPANY_INFO.address.street},</span><br />
+                  <span>{COMPANY_INFO.address.area}</span>
                 </a>
               </li>
+
+              {/* Phone Calling Link */}
+              <li className="flex items-center gap-2.5 text-slate-300">
+                <Phone className="h-4 w-4 text-amber-400 shrink-0" />
+                <a
+                  href={COMPANY_INFO.phone.tel}
+                  className="hover:text-amber-400 font-bold transition-colors"
+                  title="Call 24/7 Helpline"
+                >
+                  {COMPANY_INFO.phone.display}
+                </a>
+              </li>
+
+              {/* WhatsApp Chat Link */}
+              <li className="flex items-center gap-2.5 text-slate-300">
+                <MessageSquare className="h-4 w-4 text-emerald-400 shrink-0" />
+                <a
+                  href={COMPANY_INFO.whatsapp.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-400 font-bold transition-colors"
+                  title="Chat with us on WhatsApp"
+                >
+                  {COMPANY_INFO.whatsapp.display} (WhatsApp)
+                </a>
+              </li>
+
+              {/* Email */}
               <li className="flex items-center gap-2.5 text-slate-300">
                 <Mail className="h-4 w-4 text-amber-400 shrink-0" />
-                <a href="mailto:contact@vmsquare.in" className="hover:text-amber-400 font-medium transition-colors">
-                  contact@vmsquare.in
+                <a
+                  href={COMPANY_INFO.email.mailto}
+                  className="hover:text-amber-400 font-medium transition-colors"
+                >
+                  {COMPANY_INFO.email.address}
                 </a>
               </li>
             </ul>
 
             <div className="pt-2">
-              <Link href="/request-quote">
+              <Link href="/contact">
                 <Button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-xs py-2.5 shadow-md border-0 min-h-[44px]">
-                  Request Free Quote
+                  Contact Us
                 </Button>
               </Link>
             </div>

@@ -35,7 +35,7 @@ export default function PrivacyPolicyPage() {
 
           <h2 className="text-xl font-bold text-[#0B132B]">3. Contact & Compliance</h2>
           <p>
-            If you have questions regarding our privacy practices, please contact our compliance desk at <a href="mailto:contact@vmsquare.in" className="text-amber-600 font-bold hover:underline">contact@vmsquare.in</a>.
+            If you have questions regarding our privacy practices, please contact our compliance desk at <a href="mailto:drakshayani@vmsquaresecurity.com" className="text-amber-600 font-bold hover:underline">drakshayani@vmsquaresecurity.com</a>.
           </p>
 
           <div className="pt-4">

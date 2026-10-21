@@ -9,7 +9,7 @@ export function Hero() {
       {/* User's Exact New Hero Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center md:bg-right bg-no-repeat opacity-100"
-        style={{ backgroundImage: 'url("/images/hero_background2.png")' }}
+        style={{ backgroundImage: 'url("/images/hero_background2.jpg")' }}
       ></div>
 
       {/* Subtle gradient overlay on left only for text readability */}
@@ -40,16 +40,11 @@ export function Hero() {
             Premier Security & Manpower Solutions for Corporate Buildings, Industrial Hubs & Gated Communities across Karnataka. Disciplined personnel, 24/7 supervision & technology-driven vigilance.
           </p>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Link href="/request-quote" className="inline-block">
-              <Button size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-base h-14 px-8 rounded-xl shadow-2xl border-0 transform hover:-translate-y-0.5 transition-all w-full sm:w-auto">
-                REQUEST A FREE QUOTE <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+          {/* Unified Action Button */}
+          <div className="pt-4">
             <Link href="/contact" className="inline-block">
-              <Button size="lg" variant="outline" className="border-amber-400 text-white hover:bg-white hover:text-slate-950 font-bold text-base h-14 px-8 rounded-xl backdrop-blur-md transform hover:-translate-y-0.5 transition-all w-full sm:w-auto">
-                TALK TO OUR TEAM
+              <Button size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-base h-14 px-9 rounded-xl shadow-2xl border-0 transform hover:-translate-y-0.5 transition-all w-full sm:w-auto">
+                CONTACT US FOR A FREE QUOTE <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
           </div>

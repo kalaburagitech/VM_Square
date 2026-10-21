@@ -71,7 +71,7 @@ export function WhyChooseUs() {
 
           {/* Background Image */}
           <img
-            src="/images/why_choose_us_banner.png"
+            src="/images/why_choose_us_banner.jpg"
             alt=""
             className="absolute inset-0 h-full w-full object-cover"
           />

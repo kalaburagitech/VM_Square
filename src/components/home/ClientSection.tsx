@@ -1,9 +1,5 @@
-"use client";
-
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { ShieldCheck, Building2, ExternalLink, ArrowRight, CheckCircle2, Lock } from "lucide-react";
 
 interface ClientNamedItem {
@@ -52,7 +48,7 @@ const marqueeItems: MarqueeItem[] = [
     industry: "Residential Township",
     location: "Bengaluru",
     badge: "Gated Guard & Patrol",
-    iconBg: "bg-amber-600/10 text-amber-600 border-amber-200",
+    iconBg: "bg-vmgold/15 text-vmgold border-vmgold/30",
   },
   {
     type: "company",
@@ -114,19 +110,13 @@ export function ClientSection() {
   const duplicatedList = [...marqueeItems, ...marqueeItems];
 
   return (
-    <section className="py-20 bg-slate-900 text-white relative overflow-hidden border-y border-slate-800">
+    <section className="py-20 bg-vmdark text-white relative overflow-hidden border-y border-slate-800">
       {/* Background Decorative Accents */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-vmgold/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-vmnavy/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-12 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto space-y-4"
-        >
+        <div className="max-w-3xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-vmgold/15 text-vmgold border border-vmgold/30 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="h-4 w-4" />
             <span>CLIENT SECTION</span>
@@ -139,14 +129,14 @@ export function ClientSection() {
           <p className="text-slate-400 text-base md:text-lg max-w-2xl mx-auto">
             Safeguarding premier corporate headquarters, industrial parks, logistics hubs, and gated townships across South India.
           </p>
-        </motion.div>
+        </div>
       </div>
 
       {/* Right to Left Continuous Scrolling Marquee */}
       <div className="relative w-full overflow-hidden py-4">
         {/* Gradient Fades on Left & Right Edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-900 to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-900 to-transparent z-20 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-vmdark to-transparent z-20 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-vmdark to-transparent z-20 pointer-events-none" />
 
         <div className="animate-marquee-left flex items-center gap-6">
           {duplicatedList.map((item, index) => {
@@ -187,14 +177,16 @@ export function ClientSection() {
                 <Link
                   key={`${item.id}-${index}`}
                   href="/services"
-                  className="group shrink-0 w-[320px] md:w-[360px] bg-slate-800/90 hover:bg-slate-800 border border-vmgold/40 hover:border-vmgold rounded-2xl overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-1 block relative"
+                  className="group shrink-0 w-[290px] sm:w-[320px] md:w-[360px] bg-slate-800/90 hover:bg-slate-800 border border-vmgold/40 hover:border-vmgold rounded-2xl overflow-hidden shadow-xl transition-all duration-300 transform hover:-translate-y-1 block relative"
                 >
                   <div className="relative h-44 w-full bg-slate-950 overflow-hidden">
                     <Image
                       src={item.imageUrl}
                       alt={item.altText}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 290px, 360px"
+                      className="object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
                     
@@ -228,7 +220,7 @@ export function ClientSection() {
         <div className="inline-flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/clients"
-            className="inline-flex items-center gap-2 bg-vmgold hover:bg-vmgold/90 text-vmdark px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md hover:shadow-lg"
+            className="inline-flex items-center gap-2 bg-vmgold hover:bg-vmgold-hover text-vmdark px-6 py-3 rounded-xl font-bold text-sm transition-all shadow-md hover:shadow-lg"
           >
             <span>Explore Full Client Portfolio</span>
             <ExternalLink className="h-4 w-4" />

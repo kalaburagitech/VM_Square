@@ -61,12 +61,14 @@ export default function ClientsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {facilityGalleries.map((facility, index) => (
             <div key={index} className="bg-white rounded-2xl overflow-hidden border shadow-sm hover:shadow-lg transition-all group">
-              <div className="relative h-64 md:h-72 w-full overflow-hidden bg-slate-900">
+              <div className="relative h-56 sm:h-64 md:h-72 w-full overflow-hidden bg-slate-900">
                 <Image
                   src={facility.imageUrl}
                   alt={facility.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
+                  className="object-cover object-bottom group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                 <div className="absolute top-4 left-4 bg-vmdark/90 border border-vmgold/60 px-3 py-1 rounded-full text-xs font-bold text-vmgold flex items-center gap-1.5 shadow-md">
@@ -135,14 +137,14 @@ export default function ClientsPage() {
       </section>
 
       {/* CTA Footer */}
-      <section className="py-16 bg-slate-900 text-white border-t text-center">
+      <section className="py-16 bg-vmdark text-white border-t border-slate-800 text-center">
         <div className="container mx-auto px-4 max-w-3xl space-y-6">
           <h2 className="text-3xl font-bold">Join Our Growing Network of Satisfied Clients</h2>
           <p className="text-slate-300 text-base">
             Partner with VM SQUARE to receive dedicated 24/7 security supervision, vetted manpower, and reliable risk mitigation.
           </p>
           <div className="pt-4 flex flex-wrap justify-center gap-4">
-            <Link href="/request-quote" className="bg-vmgold hover:bg-vmgold/90 text-vmdark font-bold px-8 py-3 rounded-xl transition-all shadow-lg inline-flex items-center gap-2">
+            <Link href="/request-quote" className="bg-vmgold hover:bg-vmgold-hover text-vmdark font-bold px-8 py-3 rounded-xl transition-all shadow-lg inline-flex items-center gap-2">
               Partner With Us <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/services" className="bg-slate-800 hover:bg-slate-700 text-white font-bold px-8 py-3 rounded-xl border border-slate-700 transition-all inline-flex items-center gap-2">

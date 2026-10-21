@@ -1,54 +1,15 @@
-"use client";
-
-import { useEffect, useState, useRef } from "react";
-import { useInView } from "framer-motion";
-
 interface StatItem {
   id: string;
-  value: number;
-  suffix: string;
+  value: string;
   title: string;
 }
 
 const defaultStats: StatItem[] = [
-  { id: "1", value: 1500, suffix: "+", title: "Trained Personnel" },
-  { id: "2", value: 500, suffix: "+", title: "Sites Secured" },
-  { id: "3", value: 24, suffix: "/7", title: "Active Operations" },
-  { id: "4", value: 15, suffix: "+", title: "Years Experience" },
+  { id: "1", value: "1,500+", title: "Trained Personnel" },
+  { id: "2", value: "500+", title: "Sites Secured" },
+  { id: "3", value: "24/7", title: "Active Operations" },
+  { id: "4", value: "15+", title: "Years Experience" },
 ];
-
-function Counter({ value, suffix }: { value: number; suffix: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    if (isInView) {
-      let start = 0;
-      const end = value;
-      const duration = 2000;
-      const incrementTime = (duration / end) * 2;
-      
-      const timer = setInterval(() => {
-        start += Math.ceil(end / 50);
-        if (start >= end) {
-          setCount(end);
-          clearInterval(timer);
-        } else {
-          setCount(start);
-        }
-      }, incrementTime);
-
-      return () => clearInterval(timer);
-    }
-  }, [value, isInView]);
-
-  return (
-    <div ref={ref} className="text-4xl md:text-5xl font-bold text-vmnavy mb-2">
-      {count}{suffix}
-    </div>
-  );
-}
 
 export function StatsSection() {
   return (
@@ -57,8 +18,10 @@ export function StatsSection() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center">
           {defaultStats.map((stat) => (
             <div key={stat.id} className="flex flex-col items-center justify-center p-4">
-              <Counter value={stat.value} suffix={stat.suffix} />
-              <p className="text-sm md:text-base text-gray-600 font-medium uppercase tracking-wide">
+              <div className="text-4xl md:text-5xl font-extrabold text-vmnavy mb-2 tracking-tight">
+                {stat.value}
+              </div>
+              <p className="text-xs sm:text-sm md:text-base text-slate-600 font-semibold uppercase tracking-wider">
                 {stat.title}
               </p>
             </div>

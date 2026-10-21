@@ -310,11 +310,12 @@ Reply-To: ${data.email}`;
       recipient: targetEmail,
       timestamp: submissionTime,
     });
-  } catch (err: any) {
-    console.error("Google Workspace SMTP error in /api/send-enquiry:", err);
+  } catch (err: unknown) {
+    const error = err as Error & { code?: string; responseCode?: number };
+    console.error("Google Workspace SMTP error in /api/send-enquiry:", error.message || error);
 
     // Specific error classification
-    if (err?.code === "EAUTH" || err?.responseCode === 535) {
+    if (error?.code === "EAUTH" || error?.responseCode === 535) {
       return NextResponse.json(
         {
           success: false,
@@ -325,7 +326,7 @@ Reply-To: ${data.email}`;
       );
     }
 
-    if (err?.code === "ETIMEDOUT" || err?.code === "ESOCKETTIMEDOUT") {
+    if (error?.code === "ETIMEDOUT" || error?.code === "ESOCKETTIMEDOUT") {
       return NextResponse.json(
         {
           success: false,

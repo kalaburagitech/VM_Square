@@ -151,9 +151,9 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-slate-50 pt-24 pb-20">
       {/* Hero Banner */}
-      <section className="bg-[#0B132B] text-white py-16 mb-12 relative overflow-hidden">
+      <section className="bg-vmdark text-white py-16 mb-12 relative overflow-hidden">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-400/20 text-amber-400 border border-amber-400/30 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-vmgold/20 text-vmgold border border-vmgold/30 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="h-4 w-4" />
             <span>24/7 HELPLINE & OPERATIONS</span>
           </div>
@@ -170,7 +170,7 @@ export default function ContactPage() {
           {/* Left Column: Direct Contact Info & WhatsApp CTA */}
           <div className="lg:col-span-5 space-y-6">
             <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-              <h2 className="text-2xl font-extrabold text-[#0B132B]">Get In Touch</h2>
+              <h2 className="text-2xl font-extrabold text-vmdark">Get In Touch</h2>
               <p className="text-slate-600 text-sm leading-relaxed">
                 Reach out directly to our 24/7 control room or regional office for inquiries, guard deployments, and operational support.
               </p>
@@ -178,14 +178,14 @@ export default function ContactPage() {
               <div className="space-y-5 pt-2">
                 {/* Clickable Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-amber-400/10 text-amber-600 rounded-xl shrink-0">
+                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
                     <Phone className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[#0B132B]">Phone & 24/7 Helpline</h3>
+                    <h3 className="font-bold text-sm text-vmdark">Phone & 24/7 Helpline</h3>
                     <a
                       href={COMPANY_INFO.phone.tel}
-                      className="text-amber-600 hover:text-amber-700 font-extrabold text-base sm:text-lg block hover:underline"
+                      className="text-vmgold hover:text-vmgold-hover font-extrabold text-base sm:text-lg block hover:underline"
                       title="Click to call"
                     >
                       {COMPANY_INFO.phone.display}
@@ -196,14 +196,14 @@ export default function ContactPage() {
 
                 {/* Clickable Email */}
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-amber-400/10 text-amber-600 rounded-xl shrink-0">
+                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
                     <Mail className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[#0B132B]">Official Email Address</h3>
+                    <h3 className="font-bold text-sm text-vmdark">Official Email Address</h3>
                     <a
                       href={COMPANY_INFO.email.mailto}
-                      className="text-amber-600 font-bold text-base hover:underline block min-h-[38px] flex items-center break-all"
+                      className="text-vmgold hover:text-vmgold-hover font-bold text-base hover:underline block min-h-[38px] flex items-center break-all"
                     >
                       {COMPANY_INFO.email.address}
                     </a>
@@ -213,19 +213,19 @@ export default function ContactPage() {
 
                 {/* Clickable Address to Google Maps */}
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-amber-400/10 text-amber-600 rounded-xl shrink-0">
+                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
                     <MapPin className="h-6 w-6" />
                   </div>
                   <div className="space-y-1.5 flex-1">
-                    <h3 className="font-bold text-sm text-[#0B132B]">Head Office Location</h3>
+                    <h3 className="font-bold text-sm text-vmdark">Head Office Location</h3>
                     <a
                       href={COMPANY_INFO.address.googleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group block text-sm text-slate-700 hover:text-amber-600 transition-colors leading-relaxed font-medium"
+                      className="group block text-sm text-slate-700 hover:text-vmgold transition-colors leading-relaxed font-medium"
                       title="Click to open in Google Maps"
                     >
-                      <p className="font-bold text-slate-900 group-hover:text-amber-600 transition-colors">
+                      <p className="font-bold text-slate-900 group-hover:text-vmgold transition-colors">
                         {COMPANY_INFO.name}
                       </p>
                       <p className="mt-0.5">{COMPANY_INFO.address.building},</p>
@@ -236,7 +236,7 @@ export default function ContactPage() {
                       href={COMPANY_INFO.address.googleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs text-amber-600 hover:text-amber-700 font-bold hover:underline pt-1"
+                      className="inline-flex items-center gap-1.5 text-xs text-vmgold hover:text-vmgold-hover font-bold hover:underline pt-1"
                     >
                       <Navigation className="h-3.5 w-3.5" />
                       <span>View on Google Maps &rarr;</span>
@@ -246,11 +246,11 @@ export default function ContactPage() {
 
                 {/* Business Hours */}
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-amber-400/10 text-amber-600 rounded-xl shrink-0">
+                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
                     <Clock className="h-6 w-6" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-[#0B132B]">Operating Hours</h3>
+                    <h3 className="font-bold text-sm text-vmdark">Operating Hours</h3>
                     <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
                       <strong className="text-slate-800">Security Command:</strong> 24 Hours / 7 Days a Week<br />
                       <strong className="text-slate-800">Administrative Office:</strong> Mon - Sat (9:00 AM - 7:00 PM)
@@ -277,7 +277,7 @@ export default function ContactPage() {
           {/* Right Column: Contact Form */}
           <div className="lg:col-span-7">
             <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 md:p-10 shadow-lg">
-              <h2 className="text-2xl font-extrabold text-[#0B132B] mb-2">Send Us A Message</h2>
+              <h2 className="text-2xl font-extrabold text-vmdark mb-2">Send Us A Message</h2>
               <p className="text-slate-500 text-sm mb-6">
                 Fill out the form below. You can send your inquiry directly to our official Google Workspace email or via WhatsApp.
               </p>
@@ -305,7 +305,7 @@ export default function ContactPage() {
                   <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
                     <Button
                       onClick={handleReset}
-                      className="bg-[#0B132B] text-amber-400 font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800"
+                      className="bg-vmdark text-vmgold font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800 border border-vmgold/30"
                     >
                       Send Another Message
                     </Button>
@@ -382,7 +382,7 @@ export default function ContactPage() {
                         value={formData.fullName}
                         onChange={handleInputChange}
                         placeholder="Your full name"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#0B132B] outline-none text-sm transition-all min-h-[48px]"
+                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all min-h-[48px]"
                       />
                     </div>
 
@@ -397,7 +397,7 @@ export default function ContactPage() {
                         value={formData.contactPhone}
                         onChange={handleInputChange}
                         placeholder="10-digit mobile number"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#0B132B] outline-none text-sm transition-all min-h-[48px]"
+                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all min-h-[48px]"
                       />
                     </div>
                   </div>
@@ -413,7 +413,7 @@ export default function ContactPage() {
                       value={formData.contactEmail}
                       onChange={handleInputChange}
                       placeholder="name@example.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#0B132B] outline-none text-sm transition-all min-h-[48px]"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all min-h-[48px]"
                     />
                   </div>
 
@@ -425,7 +425,7 @@ export default function ContactPage() {
                       id="contactSubject"
                       value={formData.contactSubject}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#0B132B] outline-none text-sm bg-white transition-all min-h-[48px]"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm bg-white transition-all min-h-[48px]"
                     >
                       <option value="Request a Quote">Request a Security Quote</option>
                       <option value="General Inquiry">General Security Inquiry</option>
@@ -446,7 +446,7 @@ export default function ContactPage() {
                       value={formData.contactMsg}
                       onChange={handleInputChange}
                       placeholder="Describe your inquiry, required guard strength, or facility location..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-[#0B132B] outline-none text-sm transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all"
                     />
                   </div>
 
@@ -462,16 +462,16 @@ export default function ContactPage() {
                         type="button"
                         onClick={handleSendEmail}
                         disabled={isSubmitting}
-                        className="w-full py-4 px-4 bg-[#0B132B] hover:bg-slate-800 text-amber-400 font-extrabold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] border border-amber-400/30 hover:border-amber-400 cursor-pointer disabled:opacity-60 text-sm"
+                        className="w-full py-4 px-4 bg-vmdark hover:bg-slate-800 text-vmgold font-extrabold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] border border-vmgold/40 hover:border-vmgold cursor-pointer disabled:opacity-60 text-sm"
                       >
                         {isSubmitting ? (
                           <>
-                            <RefreshCw className="h-5 w-5 text-amber-400 animate-spin" />
+                            <RefreshCw className="h-5 w-5 text-vmgold animate-spin" />
                             <span>Sending via Google Workspace...</span>
                           </>
                         ) : (
                           <>
-                            <Mail className="h-5 w-5 text-amber-400" />
+                            <Mail className="h-5 w-5 text-vmgold" />
                             <span>SEND TO EMAIL INBOX</span>
                           </>
                         )}
@@ -509,10 +509,10 @@ export default function ContactPage() {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-amber-400/20 text-amber-600 rounded-lg">
+                <div className="p-2 bg-vmgold/15 text-vmgold rounded-lg">
                   <MapPin className="h-5 w-5" />
                 </div>
-                <h2 className="text-xl font-bold text-[#0B132B]">Regional Office Location Map</h2>
+                <h2 className="text-xl font-bold text-vmdark">Regional Office Location Map</h2>
               </div>
               <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed font-medium">
                 {COMPANY_INFO.address.full}
@@ -548,7 +548,7 @@ export default function ContactPage() {
                 href={COMPANY_INFO.address.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-[#0B132B] hover:bg-slate-800 text-amber-400 border border-amber-400/30 shadow-md transition-all hover:scale-[1.02]"
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-vmdark hover:bg-slate-800 text-vmgold border border-vmgold/40 hover:border-vmgold shadow-md transition-all hover:scale-[1.02]"
                 title="Open location directly in Google Maps"
               >
                 <ExternalLink className="h-4 w-4" />
@@ -575,10 +575,10 @@ export default function ContactPage() {
                 href={COMPANY_INFO.address.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/95 backdrop-blur-md shadow-md text-xs font-extrabold text-[#0B132B] hover:text-amber-600 border border-slate-200 transition-all hover:scale-105"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/95 backdrop-blur-md shadow-md text-xs font-extrabold text-vmdark hover:text-vmgold border border-slate-200 transition-all hover:scale-105"
                 title="Redirect to Google Maps navigation"
               >
-                <Navigation className="h-3.5 w-3.5 text-amber-500" />
+                <Navigation className="h-3.5 w-3.5 text-vmgold" />
                 <span>Navigate on Google Maps</span>
               </a>
             </div>

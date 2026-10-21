@@ -1,64 +1,67 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Building2, Plane, GraduationCap, Stethoscope } from "lucide-react";
+import { Building2, Factory, Home, Truck, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 const industries = [
-  { name: "Corporate", icon: Building2 },
-  { name: "Aviation", icon: Plane },
-  { name: "Education", icon: GraduationCap },
-  { name: "Healthcare", icon: Stethoscope },
+  { id: "corporate", name: "Corporate & Tech Parks", icon: Building2, desc: "Turnstiles, badges & executive security" },
+  { id: "manufacturing", name: "Manufacturing & Industrial", icon: Factory, desc: "Gate passes, weighbridges & safety" },
+  { id: "residential", name: "Residential Townships", icon: Home, desc: "Visitor app sync & community safety" },
+  { id: "logistics", name: "Logistics & Warehouses", icon: Truck, desc: "Cargo seal audits & loading bay vigil" },
 ];
 
 export function IndustriesPreview() {
   return (
-    <section className="py-24 bg-vmdark text-vmlight relative">
-      <div className="absolute inset-0 bg-vmnavy/90 z-0"></div>
+    <section className="py-20 md:py-24 bg-[#0B1E33] text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0B1E33] via-[#12314D]/40 to-[#0B1E33] pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="max-w-2xl"
-          >
-            <h2 className="text-sm font-semibold tracking-wider text-vmgold uppercase mb-3">
-              Industries We Serve
-            </h2>
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">
-              Securing Every Sector
-            </h3>
-            <p className="text-gray-300 text-lg">
-              Our specialized security protocols are adapted to meet the strict compliance and unique operational demands of various industries.
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-14 gap-6">
+          <div className="max-w-2xl space-y-3">
+            <p className="text-xs font-bold tracking-wider text-vmgold uppercase">
+              Sector Deployments
             </p>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-          >
-            <Link href="/industries" className="text-vmgold hover:text-white font-semibold flex items-center gap-2 transition-colors">
-              Explore All Industries
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white">
+              Securing Every Industry Vertical
+            </h2>
+            <p className="text-slate-300 text-base md:text-lg leading-relaxed">
+              Our specialized security protocols are adapted to meet strict statutory compliance and operational demands across different facility environments.
+            </p>
+          </div>
+          <div className="shrink-0">
+            <Link
+              href="/industries"
+              className="inline-flex items-center gap-2 text-vmgold hover:text-white font-extrabold text-sm transition-colors group"
+            >
+              <span>Explore All 8 Sectors</span>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </motion.div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {industries.map((industry, index) => (
-            <motion.div
-              key={industry.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-white/5 border border-white/10 p-8 rounded-xl flex flex-col items-center justify-center text-center hover:bg-white/10 transition-colors group cursor-pointer"
-            >
-              <industry.icon size={40} className="text-vmgold mb-4 group-hover:scale-110 transition-transform" />
-              <h4 className="text-lg font-semibold">{industry.name}</h4>
-            </motion.div>
-          ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {industries.map((industry) => {
+            const Icon = industry.icon;
+            return (
+              <div key={industry.id}>
+                <Link
+                  href={`/industries#${industry.id}`}
+                  className="bg-white/5 border border-white/10 p-6 md:p-8 rounded-2xl flex flex-col items-center justify-center text-center hover:bg-white/10 hover:border-vmgold/50 transition-all duration-300 group block h-full"
+                >
+                  <div className="p-4 rounded-xl bg-vmgold/10 text-vmgold mb-4 group-hover:scale-110 group-hover:bg-vmgold group-hover:text-vmdark transition-all duration-300">
+                    <Icon size={32} />
+                  </div>
+                  <h3 className="text-lg font-bold text-white group-hover:text-vmgold transition-colors">
+                    {industry.name}
+                  </h3>
+                  <p className="mt-2 text-xs text-slate-300 leading-relaxed">
+                    {industry.desc}
+                  </p>
+                  <span className="mt-4 text-xs font-semibold text-vmgold/90 group-hover:underline inline-flex items-center gap-1">
+                    View Protocols &rarr;
+                  </span>
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

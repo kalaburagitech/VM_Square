@@ -32,14 +32,14 @@ export default function WhyChooseUsPage() {
       <TechnologyMonitoring />
 
       {/* CTA */}
-      <section className="py-16 bg-primary text-white text-center">
+      <section className="py-16 bg-vmdark text-white text-center border-t border-slate-800">
         <div className="container mx-auto px-4 max-w-3xl space-y-6">
           <h2 className="text-3xl font-bold">Ready to Elevate Your Security Standard?</h2>
-          <p className="text-white/90 text-base">
+          <p className="text-slate-300 text-base">
             Contact our expert team today to schedule a comprehensive site risk assessment and receive a customized security proposal.
           </p>
           <div className="flex justify-center pt-2">
-            <Button render={<Link href="/contact" />} size="lg" className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold px-8 rounded-xl shadow-xl">
+            <Button render={<Link href="/contact" />} size="lg" className="bg-vmgold hover:bg-vmgold-hover text-vmdark font-extrabold px-8 rounded-xl shadow-xl transition-all">
               Contact Us <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>

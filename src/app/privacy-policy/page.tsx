@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { ShieldCheck, ArrowLeft } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Privacy Policy | VM SQUARE Security Services",
-  description: "Privacy policy and data protection guidelines for VM SQUARE Security & Manpower Services Pvt. Ltd.",
-};
+export const metadata = pageMetadata({
+  title: "Privacy Policy",
+  description:
+    "How VM SQUARE Security & Manpower Services Pvt. Ltd. collects, uses and protects information submitted through this website.",
+  path: "/privacy-policy",
+});
 
 export default function PrivacyPolicyPage() {
   return (

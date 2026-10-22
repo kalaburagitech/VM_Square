@@ -4,11 +4,14 @@ import { TechnologyMonitoring } from "@/components/home/TechnologyMonitoring";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Shield, ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Why Choose Us | VM SQUARE Security Services",
-  description: "Discover why VM SQUARE is trusted by leading commercial, industrial, and residential clients across Karnataka.",
-};
+export const metadata = pageMetadata({
+  title: "Why Choose Our Security Services",
+  description:
+    "How VM SQUARE screens, trains and supervises security personnel for commercial, industrial and residential sites in Bengaluru and Karnataka.",
+  path: "/why-choose-us",
+});
 
 export default function WhyChooseUsPage() {
   return (

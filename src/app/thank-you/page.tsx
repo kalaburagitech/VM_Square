@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Thank You | VM SQUARE Security Services",
-  description: "Your inquiry or quote request has been received by VM SQUARE Security & Manpower Services Pvt. Ltd.",
-};
+export const metadata = pageMetadata({
+  title: "Thank You",
+  description:
+    "Your inquiry or quote request has been received by VM SQUARE Security & Manpower Services Pvt. Ltd.",
+  path: "/thank-you",
+  noIndex: true,
+});
 
 export default function ThankYouPage() {
   return (

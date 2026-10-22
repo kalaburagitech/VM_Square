@@ -4,7 +4,8 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import { COMPANY_INFO } from "@/lib/company-info";
+import { COMPANY_INFO, SITE_URL } from "@/lib/company-info";
+import { SITE_NAME } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,13 +20,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://vmsquaresecurity.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD.",
-    template: "%s | VM SQUARE Security Services",
+    default: "Security & Manpower Services in Bengaluru | VM SQUARE",
+    template: "%s | VM SQUARE",
   },
   description:
-    "ISO Certified Security & Manpower Solutions in Bengaluru & Karnataka. Professional manned guarding, corporate security, facility management, and industrial protection.",
+    "Bengaluru-based security guard, corporate, industrial and apartment security, and housekeeping services across Karnataka. Enquiries welcome from across India.",
   keywords: [
     "Security Services Bengaluru",
     "Security Guard Agency Bangalore",
@@ -37,17 +38,14 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD." }],
   creator: "VM SQUARE",
-  alternates: {
-    canonical: "https://vmsquaresecurity.com",
-  },
+  // No canonical or og:url here: child pages inherit them, so each page sets its own via pageMetadata()
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://vmsquaresecurity.com",
-    title: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD.",
+    title: "Security & Manpower Services in Bengaluru | VM SQUARE",
     description:
-      "Professional Security & Facility Management Services across Karnataka. 24/7 Helpline & Rapid Response.",
-    siteName: "VM SQUARE Security",
+      "Bengaluru-based security guard, corporate, industrial and apartment security, and housekeeping services across Karnataka.",
+    siteName: SITE_NAME,
     images: [
       {
         url: "/images/hero_background2.jpg",
@@ -59,8 +57,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD.",
-    description: "Professional Security & Facility Management Services across Karnataka. 24/7 Helpline & Rapid Response.",
+    title: "Security & Manpower Services in Bengaluru | VM SQUARE",
+    description: "Bengaluru-based security guard, corporate, industrial and apartment security, and housekeeping services across Karnataka.",
     images: ["/images/hero_background2.jpg"],
   },
   icons: {
@@ -73,34 +71,43 @@ export const metadata: Metadata = {
   },
 };
 
+// Structured data uses only facts published in COMPANY_INFO (name, contact details, office address).
+// Opening hours, ratings and certifications are intentionally omitted until verified.
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "SecurityService",
-  name: COMPANY_INFO.name,
-  alternateName: COMPANY_INFO.shortName,
-  url: "https://vmsquaresecurity.com",
-  logo: "https://vmsquaresecurity.com/logo-transparent.png",
-  image: "https://vmsquaresecurity.com/images/hero_background2.jpg",
-  telephone: COMPANY_INFO.phone.raw,
-  email: COMPANY_INFO.email.address,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: `${COMPANY_INFO.address.building}, ${COMPANY_INFO.address.street}`,
-    addressLocality: COMPANY_INFO.address.city,
-    addressRegion: COMPANY_INFO.address.state,
-    postalCode: COMPANY_INFO.address.pincode,
-    addressCountry: "IN",
-  },
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    opens: "00:00",
-    closes: "23:59",
-  },
-  areaServed: {
-    "@type": "AdministrativeArea",
-    name: "Karnataka",
-  },
+  "@graph": [
+    {
+      "@type": "SecurityService",
+      "@id": `${SITE_URL}/#organization`,
+      name: COMPANY_INFO.name,
+      alternateName: COMPANY_INFO.shortName,
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo-transparent.png`,
+      image: `${SITE_URL}/images/hero_background2.jpg`,
+      telephone: COMPANY_INFO.phone.raw,
+      email: COMPANY_INFO.email.address,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: `${COMPANY_INFO.address.building}, ${COMPANY_INFO.address.street}`,
+        addressLocality: COMPANY_INFO.address.city,
+        addressRegion: COMPANY_INFO.address.state,
+        postalCode: COMPANY_INFO.address.pincode,
+        addressCountry: "IN",
+      },
+      areaServed: [
+        { "@type": "City", name: "Bengaluru" },
+        { "@type": "State", name: "Karnataka" },
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      inLanguage: "en-IN",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
 };
 
 export default function RootLayout({

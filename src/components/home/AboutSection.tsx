@@ -4,22 +4,22 @@ import Image from "next/image";
 
 export function AboutSection() {
   return (
-    <section className="py-20 md:py-24 bg-vmlight text-vmnavy relative overflow-hidden">
+    <section className="py-10 md:py-12 bg-vmlight text-vmnavy relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
           {/* Text Content */}
           <div>
             <p className="text-xs font-bold tracking-wider text-vmgold uppercase mb-3">
               About VM SQUARE
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-6 text-vmdark tracking-tight leading-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 text-vmdark tracking-tight leading-tight">
               Pioneering Security Solutions for the Modern Era
             </h2>
-            <p className="text-base md:text-lg mb-8 text-slate-700 leading-relaxed">
+            <p className="text-sm md:text-base mb-6 text-slate-700 leading-relaxed">
               VM SQUARE Security &amp; Manpower Services Pvt. Ltd. is an established security and facility management agency based in Bengaluru. With disciplined personnel, 24/7 supervision, and structured Standard Operating Procedures, we provide comprehensive risk mitigation tailored to corporate, industrial, and residential premises.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 mb-10">
+            <div className="flex flex-col sm:flex-row gap-5 mb-6">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-vmnavy text-vmgold rounded-xl shrink-0">
                   <Shield size={24} />
@@ -50,7 +50,7 @@ export function AboutSection() {
           </div>
 
           {/* Image Content using Next.js Image */}
-          <div className="relative h-[340px] sm:h-[440px] md:h-[480px] lg:h-[520px] w-full rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group bg-slate-900">
+          <div className="relative h-[280px] sm:h-[340px] lg:h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl border border-slate-200 group bg-slate-900">
             <Image
               src="/images/gallery/corporate_guard.jpg"
               alt="VM SQUARE Uniformed Corporate Security Officer on site deployment"

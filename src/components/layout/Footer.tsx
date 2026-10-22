@@ -1,27 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Phone, Mail, MapPin, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Phone, Mail, MapPin, MessageSquare, ExternalLink } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/company-info";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0B1E33] text-white pt-16 pb-8 border-t-4 border-vmgold">
+    <footer className="bg-[#0B1E33] text-white pt-10 pb-5 border-t-4 border-vmgold">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Responsive Grid: 1 col on Mobile, 2-3 on Tablet, 5 on Desktop */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10 mb-12">
+        {/* Responsive Grid: 1 col on Mobile, 2-3 on Tablet, 4 on Desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-7 mb-8">
           
           {/* 1. Company Info & Social Media */}
-          <div className="sm:col-span-2 md:col-span-3 lg:col-span-1 space-y-4">
-            <Link href="/" className="inline-flex items-center group mb-2 shrink-0" aria-label="VM SQUARE Home">
+          <div className="col-span-2 md:col-span-3 lg:col-span-1 space-y-3">
+            <Link href="/" className="inline-flex items-center group shrink-0" aria-label="VM SQUARE Home">
               <div className="relative px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-white shadow-md border border-slate-200/80 group-hover:border-vmgold/60 transition-all flex items-center justify-center shrink-0">
                 <Image
                   src="/logo-transparent.png"
                   alt="VM SQUARE Security & Manpower Services Logo"
-                  width={188}
-                  height={40}
+                  width={2688}
+                  height={570}
                   sizes="(max-width: 640px) 150px, (max-width: 768px) 185px, 188px"
                   className="h-7 sm:h-8 md:h-10 w-auto max-w-[150px] sm:max-w-[185px] md:max-w-none object-contain"
                   loading="lazy"
@@ -33,7 +32,7 @@ export function Footer() {
               VM SQUARE Security &amp; Manpower Services Pvt. Ltd. provides disciplined physical guarding, electronic CCTV surveillance, and facility manpower across Karnataka.
             </p>
 
-            <div className="pt-2 flex items-center gap-3 text-vmgold">
+            <div className="pt-1 flex items-center gap-3 text-vmgold">
               <a href="#" className="p-2 bg-slate-800 rounded-lg hover:bg-vmgold hover:text-vmdark transition-colors" aria-label="Facebook">
                 <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -54,8 +53,8 @@ export function Footer() {
 
           {/* 2. Services */}
           <div>
-            <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-4 text-vmgold">Services</h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-3 text-vmgold">Services</h3>
+            <ul className="space-y-2 text-xs sm:text-sm">
               {[
                 { name: "Manned Guarding", href: "/services#manned-guarding" },
                 { name: "Corporate Security", href: "/services#corporate-security" },
@@ -75,38 +74,13 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 3. Industries */}
+          {/* 3. Quick Links */}
           <div>
-            <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-4 text-vmgold">Industries</h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
-              {[
-                { name: "Corporate Tech Parks", href: "/industries#corporate" },
-                { name: "Manufacturing Plants", href: "/industries#manufacturing" },
-                { name: "Residential Townships", href: "/industries#residential" },
-                { name: "Logistics & Warehouses", href: "/industries#logistics" },
-                { name: "Healthcare & Hospitals", href: "/industries#healthcare" },
-                { name: "Educational Campuses", href: "/industries#education" },
-                { name: "Retail Complexes", href: "/industries#retail" },
-                { name: "Hospitality & Venues", href: "/industries#hospitality" },
-              ].map((ind) => (
-                <li key={ind.name}>
-                  <Link href={ind.href} className="text-slate-300 hover:text-vmgold transition-colors flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 bg-vmgold rounded-full" />
-                    <span>{ind.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* 4. Quick Links */}
-          <div>
-            <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-4 text-vmgold">Quick Links</h3>
-            <ul className="space-y-2.5 text-xs sm:text-sm">
+            <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-3 text-vmgold">Quick Links</h3>
+            <ul className="space-y-2 text-xs sm:text-sm">
               {[
                 { name: "Home", href: "/" },
                 { name: "About Us", href: "/about" },
-                { name: "Valued Clients", href: "/clients" },
                 { name: "Media Gallery", href: "/gallery" },
                 { name: "Request a Quote", href: "/request-quote" },
                 { name: "Contact Us", href: "/contact" },
@@ -121,10 +95,10 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* 5. Contact Information */}
-          <div className="space-y-4">
-            <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-4 text-vmgold">Contact Info</h3>
-            <ul className="space-y-3.5 text-xs sm:text-sm">
+          {/* 4. Contact Information */}
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider mb-3 text-vmgold">Contact Info</h3>
+            <ul className="space-y-2.5 text-xs sm:text-sm">
               <li className="flex items-start gap-2.5 text-slate-300">
                 <MapPin className="h-4 w-4 text-vmgold shrink-0 mt-0.5" />
                 <a
@@ -175,29 +149,34 @@ export function Footer() {
               </li>
             </ul>
 
-            <div className="pt-2">
-              <Link href="/contact">
-                <Button className="w-full bg-vmgold hover:bg-vmgold/90 text-vmdark font-extrabold text-xs py-2.5 shadow-md border-0 min-h-[44px]">
-                  Contact Us
-                </Button>
-              </Link>
-            </div>
           </div>
 
         </div>
 
         {/* Bottom Bar: Copyright & Legal */}
-        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-400 text-center sm:text-left">
+        <div className="pt-5 border-t border-slate-800 flex flex-col lg:flex-row justify-between items-center gap-3 text-xs text-slate-400 text-center lg:text-left">
           <p>
             &copy; {currentYear} <strong className="text-vmgold font-bold">VM SQUARE SECURITY &amp; MANPOWER SERVICES PVT. LTD.</strong> All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
             <Link href="/privacy-policy" className="hover:text-vmgold transition-colors">
               Privacy Policy
             </Link>
             <Link href="/terms-and-conditions" className="hover:text-vmgold transition-colors">
               Terms &amp; Conditions
             </Link>
+            {/* Developer credit */}
+            <a
+              href="https://kalaburagitech.com/"
+              target="_blank"
+              rel="noopener"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-vmgold/30 bg-white/5 px-3 py-1.5 text-slate-300 hover:border-vmgold hover:bg-vmgold/10 transition-colors"
+              title="Visit Kalaburagi Tech (opens in a new tab)"
+            >
+              <span>Developed by</span>{" "}
+              <span className="font-bold text-vmgold">Kalaburagi Tech</span>
+              <ExternalLink className="h-3 w-3 text-vmgold/80 group-hover:text-vmgold" />
+            </a>
           </div>
         </div>
       </div>

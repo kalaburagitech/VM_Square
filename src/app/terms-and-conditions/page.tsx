@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { ShieldCheck, ArrowLeft } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Terms & Conditions | VM SQUARE Security Services",
-  description: "Terms and conditions of service for VM SQUARE Security & Manpower Services Pvt. Ltd.",
-};
+export const metadata = pageMetadata({
+  title: "Terms & Conditions",
+  description:
+    "Terms and conditions for using the VM SQUARE Security & Manpower Services Pvt. Ltd. website and services.",
+  path: "/terms-and-conditions",
+});
 
 export default function TermsPage() {
   return (

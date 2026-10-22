@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import { Mail, Phone, MapPin, Clock, MessageSquare, CheckCircle2, ShieldCheck, Copy, Check, ExternalLink, Navigation, AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/lib/company-info";
+import { ENQUIRY_LIMITS as L, PHONE_ERROR, PHONE_INPUT_PATTERN, buildWhatsAppUrl, checkFormFields, isValidPhone } from "@/lib/enquiry-validation";
 
 export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -29,8 +30,19 @@ export default function ContactPage() {
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { id, value } = e.target;
+    e.target.setCustomValidity("");
     setFormData((prev) => ({ ...prev, [id]: value }));
     if (errorMessage) setErrorMessage(null);
+  }
+
+  // Shared validation for both the Email and WhatsApp buttons
+  function validateForm(): boolean {
+    if (!formRef.current) return false;
+    return checkFormFields(formRef.current, {
+      fullName: formData.fullName.trim().length < L.name.min ? "Please enter your full name (at least 2 characters)." : null,
+      contactPhone: isValidPhone(formData.contactPhone) ? null : PHONE_ERROR,
+      contactMsg: formData.contactMsg.trim().length < L.contactMessage.min ? "Please enter your message (at least 5 characters)." : null,
+    });
   }
 
   function handleCopyAddress(e: React.MouseEvent) {
@@ -41,31 +53,31 @@ export default function ContactPage() {
     setTimeout(() => setCopiedAddress(false), 2500);
   }
 
-  // Generate WhatsApp message URL using URLSearchParams for robust encoding
+  // Generate WhatsApp message URL (encodeURIComponent keeps line breaks and symbols intact)
   function generateWhatsAppUrl(): string {
-    const messageLines = [
-      "VM SQUARE SECURITY - WEBSITE INQUIRY",
-      `Client name: ${formData.fullName.trim()}`,
-      `Phone number: ${formData.contactPhone.trim()}`,
-      `Email address: ${formData.contactEmail.trim()}`,
-      `Subject: ${formData.contactSubject}`,
-      `Message / Requirement: ${formData.contactMsg.trim()}`,
-      "Website source: vmsquaresecurity.com",
-    ];
-
-    const messageText = messageLines.join("\n");
-    const params = new URLSearchParams();
-    params.set("text", messageText);
-
-    return `https://wa.me/${COMPANY_INFO.whatsapp.number}?${params.toString()}`;
+    return buildWhatsAppUrl(COMPANY_INFO.whatsapp.number, [
+      "*VM SQUARE SECURITY - WEBSITE ENQUIRY*",
+      "",
+      `*Name:* ${formData.fullName.trim()}`,
+      `*Phone:* ${formData.contactPhone.trim()}`,
+      `*Email:* ${formData.contactEmail.trim()}`,
+      `*Service / Topic:* ${formData.contactSubject}`,
+      "",
+      "*Message:*",
+      formData.contactMsg.trim(),
+      "",
+      "_Sent from vmsquaresecurity.com_",
+    ]);
   }
 
   // Handle WhatsApp submission with validation and clear expectation
   function handleSendWhatsApp() {
-    if (!formRef.current?.reportValidity()) {
+    if (!validateForm()) {
       return;
     }
 
+    // Clear any earlier email error so it doesn't look like WhatsApp failed
+    setErrorMessage(null);
     const url = generateWhatsAppUrl();
     setWhatsappUrl(url);
 
@@ -81,7 +93,7 @@ export default function ContactPage() {
   // Handle Email submission via Google Workspace SMTP API
   async function handleSendEmail(e?: React.FormEvent) {
     if (e) e.preventDefault();
-    if (!formRef.current?.reportValidity()) {
+    if (!validateForm()) {
       return;
     }
 
@@ -149,43 +161,44 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-20">
+    <div className="min-h-screen bg-slate-50 pb-12">
       {/* Hero Banner */}
-      <section className="bg-vmdark text-white py-16 mb-12 relative overflow-hidden">
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl space-y-4 relative z-10">
+      <section className="bg-vmdark text-white py-12 md:py-14 mb-8 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0B1E33] via-[#12314D]/90 to-[#0B1E33] pointer-events-none" />
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl space-y-3 relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-vmgold/20 text-vmgold border border-vmgold/30 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="h-4 w-4" />
             <span>24/7 HELPLINE & OPERATIONS</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">CONTACT VM SQUARE</h1>
-          <p className="text-slate-300 text-base md:text-lg max-w-2xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">CONTACT VM SQUARE</h1>
+          <p className="text-slate-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             Get in touch with our operations desk, request emergency response teams, or discuss site security deployment across Karnataka.
           </p>
         </div>
       </section>
 
       <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* Left Column: Direct Contact Info & WhatsApp CTA */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6">
-              <h2 className="text-2xl font-extrabold text-vmdark">Get In Touch</h2>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                Reach out directly to our 24/7 control room or regional office for inquiries, guard deployments, and operational support.
+          <div className="lg:col-span-5">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
+              <h2 className="text-xl font-extrabold text-vmdark">Get In Touch</h2>
+              <p className="text-slate-600 text-sm leading-relaxed -mt-3">
+                Reach out directly to our 24/7 control room or head office for inquiries, guard deployments, and operational support.
               </p>
 
-              <div className="space-y-5 pt-2">
+              <div className="space-y-4">
                 {/* Clickable Phone */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
-                    <Phone className="h-6 w-6" />
+                <div className="flex items-start gap-3.5">
+                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                    <Phone className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-vmdark">Phone & 24/7 Helpline</h3>
                     <a
                       href={COMPANY_INFO.phone.tel}
-                      className="text-vmgold hover:text-vmgold-hover font-extrabold text-base sm:text-lg block hover:underline"
+                      className="text-vmgold hover:text-vmgold-hover font-extrabold text-base block hover:underline"
                       title="Click to call"
                     >
                       {COMPANY_INFO.phone.display}
@@ -195,15 +208,15 @@ export default function ContactPage() {
                 </div>
 
                 {/* Clickable Email */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
-                    <Mail className="h-6 w-6" />
+                <div className="flex items-start gap-3.5">
+                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                    <Mail className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-vmdark">Official Email Address</h3>
                     <a
                       href={COMPANY_INFO.email.mailto}
-                      className="text-vmgold hover:text-vmgold-hover font-bold text-base hover:underline block min-h-[38px] flex items-center break-all"
+                      className="text-vmgold hover:text-vmgold-hover font-bold text-sm sm:text-base hover:underline block break-all"
                     >
                       {COMPANY_INFO.email.address}
                     </a>
@@ -212,11 +225,11 @@ export default function ContactPage() {
                 </div>
 
                 {/* Clickable Address to Google Maps */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
-                    <MapPin className="h-6 w-6" />
+                <div className="flex items-start gap-3.5">
+                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                    <MapPin className="h-5 w-5" />
                   </div>
-                  <div className="space-y-1.5 flex-1">
+                  <div className="space-y-1 flex-1">
                     <h3 className="font-bold text-sm text-vmdark">Head Office Location</h3>
                     <a
                       href={COMPANY_INFO.address.googleMapsUrl}
@@ -236,7 +249,7 @@ export default function ContactPage() {
                       href={COMPANY_INFO.address.googleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs text-vmgold hover:text-vmgold-hover font-bold hover:underline pt-1"
+                      className="inline-flex items-center gap-1.5 text-xs text-vmgold hover:text-vmgold-hover font-bold hover:underline"
                     >
                       <Navigation className="h-3.5 w-3.5" />
                       <span>View on Google Maps &rarr;</span>
@@ -245,9 +258,9 @@ export default function ContactPage() {
                 </div>
 
                 {/* Business Hours */}
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
-                    <Clock className="h-6 w-6" />
+                <div className="flex items-start gap-3.5">
+                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                    <Clock className="h-5 w-5" />
                   </div>
                   <div>
                     <h3 className="font-bold text-sm text-vmdark">Operating Hours</h3>
@@ -265,7 +278,7 @@ export default function ContactPage() {
                   href={`https://wa.me/${COMPANY_INFO.whatsapp.number}?text=${encodeURIComponent("Hello VM SQUARE, I would like to inquire about security services.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold py-3.5 px-5 rounded-xl shadow-md transition-all flex items-center justify-center gap-2.5 min-h-[48px] text-sm"
+                  className="w-full bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold py-3 px-5 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2.5 min-h-[46px] text-sm"
                 >
                   <MessageSquare className="h-5 w-5 fill-white" />
                   <span>Chat With Us On WhatsApp (+91 80732 46094)</span>
@@ -276,9 +289,9 @@ export default function ContactPage() {
 
           {/* Right Column: Contact Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 md:p-10 shadow-lg">
-              <h2 className="text-2xl font-extrabold text-vmdark mb-2">Send Us A Message</h2>
-              <p className="text-slate-500 text-sm mb-6">
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-sm">
+              <h2 className="text-xl font-extrabold text-vmdark mb-1">Send Us A Message</h2>
+              <p className="text-slate-500 text-sm mb-5">
                 Fill out the form below. You can send your inquiry directly to our official Google Workspace email or via WhatsApp.
               </p>
 
@@ -312,7 +325,7 @@ export default function ContactPage() {
                   </div>
                 </div>
               ) : (
-                <form ref={formRef} onSubmit={handleSendEmail} className="space-y-5">
+                <form ref={formRef} onSubmit={handleSendEmail} className="space-y-4">
                   {/* Honeypot Spam Trap (Hidden from genuine visitors) */}
                   <div className="hidden" aria-hidden="true">
                     <input
@@ -370,8 +383,8 @@ export default function ContactPage() {
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    <div className="space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-1.5">
                       <label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider text-slate-700">
                         Full Name <span className="text-red-500">*</span>
                       </label>
@@ -379,14 +392,16 @@ export default function ContactPage() {
                         id="fullName"
                         type="text"
                         required
+                        minLength={L.name.min}
+                        maxLength={L.name.max}
                         value={formData.fullName}
                         onChange={handleInputChange}
                         placeholder="Your full name"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all min-h-[48px]"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[44px]"
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       <label htmlFor="contactPhone" className="text-xs font-bold uppercase tracking-wider text-slate-700">
                         Phone Number <span className="text-red-500">*</span>
                       </label>
@@ -394,15 +409,18 @@ export default function ContactPage() {
                         id="contactPhone"
                         type="tel"
                         required
+                        pattern={PHONE_INPUT_PATTERN}
+                        maxLength={L.phone.max}
+                        title={PHONE_ERROR}
                         value={formData.contactPhone}
                         onChange={handleInputChange}
                         placeholder="10-digit mobile number"
-                        className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all min-h-[48px]"
+                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[44px]"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <label htmlFor="contactEmail" className="text-xs font-bold uppercase tracking-wider text-slate-700">
                       Email Address <span className="text-red-500">*</span>
                     </label>
@@ -410,14 +428,15 @@ export default function ContactPage() {
                       id="contactEmail"
                       type="email"
                       required
+                      maxLength={L.email.max}
                       value={formData.contactEmail}
                       onChange={handleInputChange}
                       placeholder="name@example.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all min-h-[48px]"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[44px]"
                     />
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <label htmlFor="contactSubject" className="text-xs font-bold uppercase tracking-wider text-slate-700">
                       Subject / Topic
                     </label>
@@ -425,7 +444,7 @@ export default function ContactPage() {
                       id="contactSubject"
                       value={formData.contactSubject}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm bg-white transition-all min-h-[48px]"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm bg-white transition-all min-h-[44px]"
                     >
                       <option value="Request a Quote">Request a Security Quote</option>
                       <option value="General Inquiry">General Security Inquiry</option>
@@ -435,7 +454,7 @@ export default function ContactPage() {
                     </select>
                   </div>
 
-                  <div className="space-y-2">
+                  <div className="space-y-1.5">
                     <label htmlFor="contactMsg" className="text-xs font-bold uppercase tracking-wider text-slate-700">
                       Your Message <span className="text-red-500">*</span>
                     </label>
@@ -443,26 +462,28 @@ export default function ContactPage() {
                       id="contactMsg"
                       rows={4}
                       required
+                      minLength={L.contactMessage.min}
+                      maxLength={L.contactMessage.max}
                       value={formData.contactMsg}
                       onChange={handleInputChange}
                       placeholder="Describe your inquiry, required guard strength, or facility location..."
-                      className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark outline-none text-sm transition-all"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all"
                     />
                   </div>
 
                   {/* Action Buttons: Email and WhatsApp Options */}
-                  <div className="pt-3 space-y-3">
+                  <div className="pt-1 space-y-3">
                     <p className="text-xs font-bold uppercase tracking-wider text-slate-600">
                       Choose How To Send Your Enquiry:
                     </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {/* Send via Email Button */}
                       <button
                         type="button"
                         onClick={handleSendEmail}
                         disabled={isSubmitting}
-                        className="w-full py-4 px-4 bg-vmdark hover:bg-slate-800 text-vmgold font-extrabold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] border border-vmgold/40 hover:border-vmgold cursor-pointer disabled:opacity-60 text-sm"
+                        className="w-full py-3 px-4 bg-vmdark hover:bg-slate-800 text-vmgold font-extrabold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 min-h-[48px] border border-vmgold/40 hover:border-vmgold cursor-pointer disabled:opacity-60 text-sm"
                       >
                         {isSubmitting ? (
                           <>
@@ -482,14 +503,14 @@ export default function ContactPage() {
                         type="button"
                         onClick={handleSendWhatsApp}
                         disabled={isSubmitting}
-                        className="w-full py-4 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] cursor-pointer disabled:opacity-60 text-sm hover:scale-[1.01]"
+                        className="w-full py-3 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 min-h-[48px] cursor-pointer disabled:opacity-60 text-sm"
                       >
                         <MessageSquare className="h-5 w-5 fill-white" />
                         <span>SEND VIA WHATSAPP</span>
                       </button>
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 pt-1 gap-2">
+                    <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 gap-2">
                       <span>
                         ✉️ Official recipient: <strong className="text-slate-800">{COMPANY_INFO.email.address}</strong>
                       </span>
@@ -505,16 +526,16 @@ export default function ContactPage() {
         </div>
 
         {/* Location Map Section */}
-        <div className="mt-14 bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-md space-y-5">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+        <div className="mt-6 lg:mt-8 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-100">
             <div>
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-vmgold/15 text-vmgold rounded-lg">
                   <MapPin className="h-5 w-5" />
                 </div>
-                <h2 className="text-xl font-bold text-vmdark">Regional Office Location Map</h2>
+                <h2 className="text-lg font-bold text-vmdark">Head Office Location Map</h2>
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed font-medium">
+              <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed font-medium">
                 {COMPANY_INFO.address.full}
               </p>
             </div>
@@ -558,9 +579,9 @@ export default function ContactPage() {
           </div>
 
           {/* Interactive Google Map with Direct Click Overlay */}
-          <div className="relative w-full h-[380px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner group">
+          <div className="relative w-full h-[280px] sm:h-[320px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner group">
             <iframe
-              title="VM SQUARE Office Location Map - Yashognana, Maragondanahalli, Bengaluru"
+              title={`VM SQUARE head office location map - ${COMPANY_INFO.address.full}`}
               src={COMPANY_INFO.address.embedUrl}
               width="100%"
               height="100%"

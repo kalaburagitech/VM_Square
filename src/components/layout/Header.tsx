@@ -29,8 +29,6 @@ export function Header() {
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Services", href: "/services" },
-    { name: "Industries", href: "/industries" },
-    { name: "Clients", href: "/clients" },
     { name: "Gallery", href: "/gallery" },
   ];
 
@@ -50,8 +48,8 @@ export function Header() {
               <Image
                 src="/logo-transparent.png"
                 alt="VM SQUARE Security & Manpower Services Logo"
-                width={190}
-                height={40}
+                width={2688}
+                height={570}
                 sizes="(max-width: 640px) 145px, (max-width: 768px) 180px, 190px"
                 className="h-7 sm:h-8 md:h-10 w-auto max-w-[145px] sm:max-w-[180px] md:max-w-none object-contain"
                 priority

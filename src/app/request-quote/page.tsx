@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import { ShieldCheck, CheckCircle2, PhoneCall, Mail, Building2, MapPin, Users, FileText, User, MessageSquare, AlertCircle, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/lib/company-info";
+import { ENQUIRY_LIMITS as L, PHONE_ERROR, PHONE_INPUT_PATTERN, buildWhatsAppUrl, checkFormFields, isValidPhone } from "@/lib/enquiry-validation";
 
 export default function RequestQuotePage() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -31,37 +32,49 @@ export default function RequestQuotePage() {
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
+    e.target.setCustomValidity("");
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errorMessage) setErrorMessage(null);
   }
 
-  // Format WhatsApp message with URLSearchParams
+  // Shared validation for both the Email and WhatsApp buttons
+  function validateForm(): boolean {
+    if (!formRef.current) return false;
+    return checkFormFields(formRef.current, {
+      name: formData.name.trim().length < L.name.min ? "Please enter your name (at least 2 characters)." : null,
+      phone: isValidPhone(formData.phone) ? null : PHONE_ERROR,
+      location: formData.location.trim().length < L.location.min ? "Please enter the facility location." : null,
+    });
+  }
+
+  // Format WhatsApp message (encodeURIComponent keeps line breaks and symbols intact)
   function generateWhatsAppUrl(): string {
-    const messageLines = [
-      "VM SQUARE SECURITY - QUOTE REQUEST",
-      `Contact Person: ${formData.name.trim()}`,
-      `Company: ${formData.company.trim() || "Not Specified / Individual"}`,
-      `Phone: ${formData.phone.trim()}`,
-      `Email: ${formData.email.trim()}`,
-      `Service Required: ${formData.service}`,
-      `Facility Location: ${formData.location.trim()}`,
-      `Guards Count: ${formData.personnelCount}`,
-      `Project Details: ${formData.message.trim() || "None"}`,
-      "Website source: vmsquaresecurity.com",
-    ];
+    const company = formData.company.trim();
+    const details = formData.message.trim();
 
-    const messageText = messageLines.join("\n");
-    const params = new URLSearchParams();
-    params.set("text", messageText);
-
-    return `https://wa.me/${COMPANY_INFO.whatsapp.number}?${params.toString()}`;
+    return buildWhatsAppUrl(COMPANY_INFO.whatsapp.number, [
+      "*VM SQUARE SECURITY - QUOTE REQUEST*",
+      "",
+      `*Name:* ${formData.name.trim()}`,
+      ...(company ? [`*Company:* ${company}`] : []),
+      `*Phone:* ${formData.phone.trim()}`,
+      `*Email:* ${formData.email.trim()}`,
+      `*Service Required:* ${formData.service}`,
+      `*Facility Location:* ${formData.location.trim()}`,
+      `*Guards Required:* ${formData.personnelCount}`,
+      ...(details ? ["", "*Project Details:*", details] : []),
+      "",
+      "_Sent from vmsquaresecurity.com_",
+    ]);
   }
 
   function handleSendWhatsApp() {
-    if (!formRef.current?.reportValidity()) {
+    if (!validateForm()) {
       return;
     }
 
+    // Clear any earlier email error so it doesn't look like WhatsApp failed
+    setErrorMessage(null);
     const url = generateWhatsAppUrl();
     setWhatsappUrl(url);
 
@@ -74,7 +87,7 @@ export default function RequestQuotePage() {
 
   async function handleSendEmail(e?: React.FormEvent) {
     if (e) e.preventDefault();
-    if (!formRef.current?.reportValidity()) {
+    if (!validateForm()) {
       return;
     }
 
@@ -270,6 +283,8 @@ export default function RequestQuotePage() {
                     name="name"
                     type="text"
                     required
+                    minLength={L.name.min}
+                    maxLength={L.name.max}
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Enter your name"
@@ -287,6 +302,7 @@ export default function RequestQuotePage() {
                     id="company"
                     name="company"
                     type="text"
+                    maxLength={L.company.max}
                     value={formData.company}
                     onChange={handleInputChange}
                     placeholder="e.g. Apex Tech Park Ltd"
@@ -305,6 +321,9 @@ export default function RequestQuotePage() {
                     name="phone"
                     type="tel"
                     required
+                    pattern={PHONE_INPUT_PATTERN}
+                    maxLength={L.phone.max}
+                    title={PHONE_ERROR}
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="10-digit mobile number"
@@ -323,6 +342,7 @@ export default function RequestQuotePage() {
                     name="email"
                     type="email"
                     required
+                    maxLength={L.email.max}
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="name@company.com"
@@ -366,6 +386,8 @@ export default function RequestQuotePage() {
                     name="location"
                     type="text"
                     required
+                    minLength={L.location.min}
+                    maxLength={L.location.max}
                     value={formData.location}
                     onChange={handleInputChange}
                     placeholder="e.g. Whitefield, Bengaluru"
@@ -405,6 +427,7 @@ export default function RequestQuotePage() {
                     id="message"
                     name="message"
                     rows={4}
+                    maxLength={L.quoteMessage.max}
                     value={formData.message}
                     onChange={handleInputChange}
                     placeholder="Provide information regarding property size, shift timings, specific risk factors..."

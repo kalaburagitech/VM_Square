@@ -1,3 +1,6 @@
+// Preferred canonical origin (the bare domain 308-redirects here)
+export const SITE_URL = "https://www.vmsquaresecurity.com";
+
 export const COMPANY_INFO = {
   name: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD.",
   shortName: "VM SQUARE",
@@ -16,14 +19,14 @@ export const COMPANY_INFO = {
     mailto: "mailto:drakshayani@vmsquaresecurity.com",
   },
   address: {
-    building: "#12, Ground Floor, Yashognana",
-    street: "2nd Cross, Somashekara Reddy Layout, Maragondanahalli",
-    area: "Krishnarajapuram, Bengaluru, Karnataka - 560036, India",
-    pincode: "560036",
+    building: "52, Bovi Colony",
+    street: "Ramamurthy Nagar",
+    area: "Bengaluru, Karnataka - 560016, India",
+    pincode: "560016",
     city: "Bengaluru",
     state: "Karnataka",
-    full: "#12, Ground Floor, Yashognana, 2nd Cross, Somashekara Reddy Layout, Maragondanahalli, Krishnarajapuram, Bengaluru, Karnataka - 560036, India",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=%2312%2C+Ground+Floor%2C+Yashognana%2C+2nd+Cross%2C+Somashekara+Reddy+Layout%2C+Maragondanahalli%2C+Krishnarajapuram%2C+Bengaluru%2C+Karnataka+560036",
-    embedUrl: "https://maps.google.com/maps?q=Yashognana%2C+2nd+Cross%2C+Somashekara+Reddy+Layout%2C+Maragondanahalli%2C+Krishnarajapuram%2C+Bengaluru%2C+Karnataka+560036&t=&z=15&ie=UTF8&iwloc=&output=embed",
+    full: "52, Bovi Colony, Ramamurthy Nagar, Bengaluru, Karnataka - 560016, India",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=52%2C+Bovi+Colony%2C+Ramamurthy+Nagar%2C+Bengaluru%2C+Karnataka+560016",
+    embedUrl: "https://maps.google.com/maps?q=52%2C+Bovi+Colony%2C+Ramamurthy+Nagar%2C+Bengaluru%2C+Karnataka+560016&t=&z=15&ie=UTF8&iwloc=&output=embed",
   },
 };

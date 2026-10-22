@@ -3,25 +3,25 @@ import Image from "next/image";
 
 export function TechnologyMonitoring() {
   return (
-    <section className="py-20 md:py-24 bg-[#0B1E33] text-white relative overflow-hidden">
+    <section className="py-10 md:py-12 bg-[#0B1E33] text-white relative overflow-hidden">
       {/* Background patterns */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-vmgold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
           <div className="space-y-4">
             <p className="text-xs font-bold tracking-wider text-vmgold uppercase">
               Electronic Vigilance
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
               24/7 Command &amp; Control Operations
             </h2>
-            <p className="text-base md:text-lg text-slate-300 mb-6 leading-relaxed">
+            <p className="text-sm md:text-base text-slate-300 mb-4 leading-relaxed">
               Our central operations monitoring desk coordinates multi-monitor CCTV video feeds, electronic access alarms, and night supervisor patrol checkpoints to maintain real-time situational awareness.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
               <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm hover:border-vmgold/40 transition-colors">
                 <Video className="text-vmgold mb-3" size={26} />
                 <h3 className="font-bold text-sm text-white mb-1">CCTV Video Wall</h3>
@@ -45,7 +45,7 @@ export function TechnologyMonitoring() {
             </div>
           </div>
 
-          <div className="relative h-[300px] sm:h-[400px] md:h-[460px] lg:h-[480px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-slate-950">
+          <div className="relative h-[260px] sm:h-[340px] lg:h-[380px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-slate-950">
             <Image
               src="/images/gallery/command_center.jpg"
               alt="VM SQUARE 24/7 Command & Control Center CCTV Video Wall"

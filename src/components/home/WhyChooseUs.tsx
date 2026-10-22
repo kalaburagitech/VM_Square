@@ -57,10 +57,10 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="w-full bg-[#0B1E33] py-16 md:py-20 text-white">
+    <section className="w-full bg-[#0B1E33] py-10 md:py-12 text-white">
       <div className="container mx-auto px-4 md:px-6">
 
-        <div className="relative min-h-[520px] overflow-hidden rounded-2xl md:rounded-3xl border border-vmgold/30 shadow-2xl bg-slate-950">
+        <div className="relative min-h-[420px] overflow-hidden rounded-2xl md:rounded-3xl border border-vmgold/30 shadow-2xl bg-slate-950">
 
           {/* Background Image using Next.js Image */}
           <Image
@@ -75,13 +75,13 @@ export function WhyChooseUs() {
           <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0B1E33]/95 via-[#0B1E33]/85 md:via-[#0B1E33]/60 to-[#0B1E33]/40 md:to-[#0B1E33]/95 pointer-events-none" />
 
           {/* Main content */}
-          <div className="relative z-10 flex min-h-[520px] flex-col justify-center">
+          <div className="relative z-10 flex min-h-[420px] flex-col justify-center">
 
             {/* Right content area */}
-            <div className="ml-auto w-full max-w-[880px] px-6 py-10 md:px-10 lg:px-12">
+            <div className="ml-auto w-full max-w-[880px] px-6 py-8 md:px-10 lg:px-12">
 
               {/* Heading */}
-              <div className="mb-7 text-center lg:text-left">
+              <div className="mb-5 text-center lg:text-left">
 
                 <div className="mb-3 flex items-center justify-center gap-3 lg:justify-start">
                   <span className="h-[2px] w-8 bg-vmgold" />
@@ -91,7 +91,7 @@ export function WhyChooseUs() {
                   <span className="h-[2px] w-8 bg-vmgold" />
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-tight leading-none text-white">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-none text-white">
                   Your Safety, <br />
                   <span className="text-vmgold">Our Priority</span>
                 </h2>

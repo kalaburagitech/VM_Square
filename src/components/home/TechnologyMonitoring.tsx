@@ -1,64 +1,126 @@
 import { Cpu, Activity, Video, Radio } from "lucide-react";
 import Image from "next/image";
 
+const features = [
+  {
+    icon: Video,
+    title: "CCTV Video Wall",
+    description: "Live multi-camera site surveillance and incident review.",
+  },
+  {
+    icon: Activity,
+    title: "Site Monitoring",
+    description: "Gate logs, intrusion sensor checks and patrol verification.",
+  },
+  {
+    icon: Cpu,
+    title: "Access Control",
+    description: "Access management, entry records and visitor tracking.",
+  },
+  {
+    icon: Radio,
+    title: "Rapid Dispatch",
+    description: "Direct wireless radio communication with site supervisors.",
+  },
+];
+
 export function TechnologyMonitoring() {
   return (
-    <section className="py-10 md:py-12 bg-[#0B1E33] text-white relative overflow-hidden">
-      {/* Background patterns */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-vmgold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+    <section className="relative overflow-hidden bg-white py-10 md:py-14 border-t border-slate-200">
+      <div className="mx-auto w-full max-w-[1450px] px-5 sm:px-8 lg:px-12">
+       <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[5fr_7fr] lg:gap-12">
+          {/* LEFT CONTENT */}
+          <div>
+            <div className="mb-3 flex items-center gap-3">
+              <span className="h-[2px] w-8 bg-vmgold" />
+              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#B88219]">
+                Electronic Vigilance
+              </p>
+            </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-center">
-          <div className="space-y-4">
-            <p className="text-xs font-bold tracking-wider text-vmgold uppercase">
-              Electronic Vigilance
-            </p>
-            <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight">
-              24/7 Command &amp; Control Operations
+            <h2 className="max-w-xl text-3xl font-extrabold leading-tight tracking-tight text-[#0B1E33] md:text-4xl">
+              24/7 Command &amp; Control
+              <span className="block text-vmgold">Operations</span>
             </h2>
-            <p className="text-sm md:text-base text-slate-300 mb-4 leading-relaxed">
-              Our central operations monitoring desk coordinates multi-monitor CCTV video feeds, electronic access alarms, and night supervisor patrol checkpoints to maintain real-time situational awareness.
+
+            <p className="mt-4 max-w-xl text-sm leading-7 text-slate-600 md:text-base">
+              Our central operations monitoring desk coordinates CCTV surveillance,
+              electronic access monitoring and supervisor patrol checkpoints to
+              support real-time situational awareness.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
-              <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm hover:border-vmgold/40 transition-colors">
-                <Video className="text-vmgold mb-3" size={26} />
-                <h3 className="font-bold text-sm text-white mb-1">CCTV Video Wall</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">Live multi-camera site surveillance and incident review.</p>
-              </div>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm hover:border-vmgold/40 transition-colors">
-                <Activity className="text-vmgold mb-3" size={26} />
-                <h3 className="font-bold text-sm text-white mb-1">Telemetry Monitoring</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">Gate logs, intrusion sensor checks, and patrol verification.</p>
-              </div>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm hover:border-vmgold/40 transition-colors">
-                <Cpu className="text-vmgold mb-3" size={26} />
-                <h3 className="font-bold text-sm text-white mb-1">Access Control</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">Biometric badges, turnstile records, and visitor tracking.</p>
-              </div>
-              <div className="bg-white/5 border border-white/10 p-5 rounded-2xl backdrop-blur-sm hover:border-vmgold/40 transition-colors">
-                <Radio className="text-vmgold mb-3" size={26} />
-                <h3 className="font-bold text-sm text-white mb-1">Rapid Dispatch</h3>
-                <p className="text-xs text-slate-300 leading-relaxed">Direct wireless radio communication with site supervisors.</p>
-              </div>
+            {/* Feature list: no cards, just lines */}
+            <div className="mt-6 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
+              {features.map((feature, index) => {
+                const Icon = feature.icon;
+                return (
+                  <div
+                    key={feature.title}
+                    className="group relative border-t border-slate-200 py-4 transition-colors hover:border-vmgold"
+                  >
+                    <span className="absolute -top-px left-0 h-[2px] w-0 bg-vmgold transition-all duration-300 group-hover:w-full" />
+
+                    <div className="flex items-center gap-3">
+                      <Icon
+                        size={22}
+                        strokeWidth={1.8}
+                        className="shrink-0 text-vmgold transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <h3 className="text-base font-bold text-[#0B1E33]">
+                        {feature.title}
+                      </h3>
+                      <span className="ml-auto text-xs font-bold tracking-widest text-slate-300 transition-colors group-hover:text-vmgold">
+                        0{index + 1}
+                      </span>
+                    </div>
+
+                    <p className="mt-1.5 pl-[34px] text-xs leading-6 text-slate-600 md:text-sm">
+                      {feature.description}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
-          <div className="relative h-[260px] sm:h-[340px] lg:h-[380px] w-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 group bg-slate-950">
-            <Image
-              src="/images/gallery/command_center.jpg"
-              alt="VM SQUARE 24/7 Command & Control Center CCTV Video Wall"
-              fill
-              className="object-cover object-[45%_center] sm:object-center group-hover:scale-105 transition-transform duration-500"
-              sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+          {/* RIGHT IMAGE */}
+          <div className="relative">
+            {/* Gold corner accents */}
+            <span className="pointer-events-none absolute -left-2 -top-2 h-12 w-12 rounded-tl-2xl border-l-4 border-t-4 border-vmgold" />
+            <span className="pointer-events-none absolute -bottom-2 -right-2 h-12 w-12 rounded-br-2xl border-b-4 border-r-4 border-vmgold" />
 
-            {/* Overlay UI element - Positioned at top-left so it never covers the VM SQUARE logo in the photo's top right */}
-            <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-black/80 backdrop-blur-md px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border border-vmgold/40 flex items-center gap-2 sm:gap-2.5 shadow-lg z-10">
-              <div className="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-[10px] sm:text-xs font-mono text-emerald-400 font-bold tracking-wider">COMMAND MONITORING</span>
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10">
+              {/* Full image, natural ratio, nothing cropped or covered */}
+              <Image
+                src="/images/gallery/command_center.jpg"
+                alt="VM SQUARE command and control center"
+                width={1600}
+                height={1000}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="h-auto w-full"
+              />
+
+              {/* Caption bar below the image */}
+              <div className="flex flex-wrap items-center justify-between gap-2 border-t-4 border-vmgold bg-white px-4 py-3 sm:px-5">
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-widest text-[#B88219]">
+                    Security Operations
+                  </p>
+                  <h3 className="text-base font-extrabold text-[#0B1E33] sm:text-lg">
+                    Always Alert. Always Prepared.
+                  </h3>
+                </div>
+
+                <div className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                  </span>
+                  <span className="text-[10px] font-bold tracking-wider text-[#0B1E33] sm:text-xs">
+                    COMMAND MONITORING
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
 

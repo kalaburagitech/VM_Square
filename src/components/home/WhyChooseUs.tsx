@@ -57,12 +57,12 @@ const features = [
 
 export function WhyChooseUs() {
   return (
-    <section className="w-full bg-[#0B1E33] py-10 md:py-12 text-white">
+    <section className="w-full bg-gradient-to-b from-white to-slate-50 py-10 md:py-12 text-[#0B1E33]">
       <div className="container mx-auto px-4 md:px-6">
 
-        <div className="relative min-h-[420px] overflow-hidden rounded-2xl md:rounded-3xl border border-vmgold/30 shadow-2xl bg-slate-950">
+        <div className="relative min-h-[420px] overflow-hidden rounded-2xl md:rounded-3xl border border-vmgold/40 shadow-[0_20px_60px_-15px_rgba(11,30,51,0.25)] bg-white">
 
-          {/* Background Image using Next.js Image */}
+          {/* Background Image (kept clear and bright) */}
           <Image
             src="/images/why_choose_us_banner.jpg"
             alt="VM SQUARE Field Security Supervisor on site patrol"
@@ -71,8 +71,14 @@ export function WhyChooseUs() {
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 100vw, 1280px"
           />
 
-          {/* Adaptive dark gradient overlay for text readability across mobile & desktop */}
-          <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-[#0B1E33]/95 via-[#0B1E33]/85 md:via-[#0B1E33]/60 to-[#0B1E33]/40 md:to-[#0B1E33]/95 pointer-events-none" />
+          {/* Overlay: mobile = top-to-bottom fade, desktop = photo clear on left, white behind text on right */}
+          <div
+            className="
+              absolute inset-0 pointer-events-none
+              bg-gradient-to-b from-white/50 via-white/90 to-white
+              md:bg-gradient-to-r md:from-transparent md:from-20% md:via-white/85 md:via-55% md:to-white md:to-100%
+            "
+          />
 
           {/* Main content */}
           <div className="relative z-10 flex min-h-[420px] flex-col justify-center">
@@ -91,12 +97,12 @@ export function WhyChooseUs() {
                   <span className="h-[2px] w-8 bg-vmgold" />
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-none text-white">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight leading-none text-[#0B1E33]">
                   Your Safety, <br />
                   <span className="text-vmgold">Our Priority</span>
                 </h2>
 
-                <p className="mx-auto mt-4 max-w-[620px] text-xs sm:text-sm leading-relaxed text-slate-200 lg:mx-0">
+                <p className="mx-auto mt-4 max-w-[620px] text-xs sm:text-sm leading-relaxed text-slate-700 lg:mx-0">
                   Disciplined security officers, rigorous background verification, and technology-driven supervision engineered for corporate towers, industrial estates, and gated townships across Karnataka.
                 </p>
 
@@ -114,38 +120,41 @@ export function WhyChooseUs() {
                         group
                         rounded-xl
                         border
-                        border-white/10
-                        bg-slate-900/80
+                        border-slate-200
+                        bg-white
                         p-3.5
                         text-center
-                        backdrop-blur-md
+                        shadow-md
+                        shadow-slate-900/5
                         transition-all
                         duration-300
                         hover:-translate-y-1
-                        hover:border-vmgold/60
-                        hover:bg-slate-900/95
-                        hover:shadow-lg
+                        hover:border-vmgold
+                        hover:shadow-xl
+                        hover:shadow-vmgold/20
                       "
                     >
                       <div className="mb-2 flex justify-center">
-                        <Icon
-                          className="
-                            h-7
-                            w-7
-                            text-vmgold
-                            transition-transform
-                            duration-300
-                            group-hover:scale-110
-                          "
-                          strokeWidth={1.8}
-                        />
+                        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-vmgold/10 transition-colors duration-300 group-hover:bg-vmgold/20">
+                          <Icon
+                            className="
+                              h-6
+                              w-6
+                              text-vmgold
+                              transition-transform
+                              duration-300
+                              group-hover:scale-110
+                            "
+                            strokeWidth={1.8}
+                          />
+                        </span>
                       </div>
 
-                      <h3 className="text-xs font-bold text-white md:text-sm line-clamp-1">
+                      <h3 className="text-xs font-bold text-[#0B1E33] md:text-sm line-clamp-1">
                         {feature.title}
                       </h3>
 
-                      <p className="mt-1 text-[11px] leading-tight text-slate-300">
+                      <p className="mt-1 text-[11px] leading-tight text-slate-600">
                         {feature.description}
                       </p>
                     </div>

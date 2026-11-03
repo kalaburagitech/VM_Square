@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { PublicGalleryGrid } from "@/components/gallery/PublicGalleryGrid";
 import { galleryImages } from "@/lib/gallery-data";
 import { Camera } from "lucide-react";
@@ -15,38 +14,30 @@ export default function GalleryPage() {
   return (
     <div className="bg-[#F6F8FB] min-h-screen">
       {/* Hero Header Banner */}
-      <section className="relative bg-[#0B1E33] text-white py-12 md:py-14 overflow-hidden">
-        {/* Local operational image background with subtle blend */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <Image
-            src="/images/hero_background2.jpg"
-            alt="VM SQUARE Operational Security Background"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[80%_center] opacity-20"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B1E33] via-[#0B1E33]/90 to-[#12314D]/80 pointer-events-none" />
+      <section className="relative bg-gradient-to-b from-white to-[#F6F8FB] text-[#0B1E33] py-6 md:py-8 overflow-hidden border-b border-slate-200">
+        {/* Gold accent line on top */}
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-vmgold to-transparent" />
 
-        <div className="container relative z-10 mx-auto px-4 md:px-6 text-center max-w-3xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-vmgold/20 text-vmgold border border-vmgold/30 text-xs font-bold uppercase tracking-wider mx-auto">
+        <div className="container relative z-10 mx-auto px-4 md:px-6 text-center max-w-3xl space-y-2.5">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-vmgold/15 text-[#B88219] border border-vmgold/40 text-xs font-bold uppercase tracking-wider mx-auto">
             <Camera className="h-4 w-4" />
             <span>SECURITY IN ACTION</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#0B1E33]">
             OPERATIONAL MEDIA GALLERY
           </h1>
 
-          <p className="text-slate-300 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+          <span className="mx-auto block h-1 w-16 rounded-full bg-vmgold" />
+
+          <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
             Photos of our security personnel, training drills, fire safety exercises, command monitoring, and site deployments across Karnataka.
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section className="py-12 container mx-auto px-4 md:px-6">
+      <section className="py-8 md:py-10 container mx-auto px-4 md:px-6">
         <PublicGalleryGrid images={galleryImages} />
       </section>
     </div>

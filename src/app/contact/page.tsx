@@ -1,10 +1,31 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { Mail, Phone, MapPin, Clock, MessageSquare, CheckCircle2, ShieldCheck, Copy, Check, ExternalLink, Navigation, AlertCircle, RefreshCw } from "lucide-react";
+import { useState, useRef, type ChangeEvent, type FormEvent } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  MessageSquare,
+  CheckCircle2,
+  ShieldCheck,
+  AlertCircle,
+  RefreshCw,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/lib/company-info";
-import { ENQUIRY_LIMITS as L, PHONE_ERROR, PHONE_INPUT_PATTERN, buildWhatsAppUrl, checkFormFields, isValidPhone } from "@/lib/enquiry-validation";
+import {
+  ENQUIRY_LIMITS as L,
+  PHONE_ERROR,
+  PHONE_INPUT_PATTERN,
+  buildWhatsAppUrl,
+  checkFormFields,
+  isValidPhone,
+} from "@/lib/enquiry-validation";
+
+const labelClass = "text-xs font-bold uppercase tracking-wider text-[#0B1E33]";
+const inputClass =
+  "w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-[#0B1E33] placeholder:text-slate-400 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[44px]";
 
 export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -20,15 +41,13 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState<{
     messageId?: string;
-    timestamp?: string;
     recipient?: string;
   } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [whatsappNotice, setWhatsappNotice] = useState<string | null>(null);
   const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
-  const [copiedAddress, setCopiedAddress] = useState(false);
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+  function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { id, value } = e.target;
     e.target.setCustomValidity("");
     setFormData((prev) => ({ ...prev, [id]: value }));
@@ -43,14 +62,6 @@ export default function ContactPage() {
       contactPhone: isValidPhone(formData.contactPhone) ? null : PHONE_ERROR,
       contactMsg: formData.contactMsg.trim().length < L.contactMessage.min ? "Please enter your message (at least 5 characters)." : null,
     });
-  }
-
-  function handleCopyAddress(e: React.MouseEvent) {
-    e.preventDefault();
-    e.stopPropagation();
-    navigator.clipboard.writeText(COMPANY_INFO.address.full);
-    setCopiedAddress(true);
-    setTimeout(() => setCopiedAddress(false), 2500);
   }
 
   // Generate WhatsApp message URL (encodeURIComponent keeps line breaks and symbols intact)
@@ -91,7 +102,7 @@ export default function ContactPage() {
   }
 
   // Handle Email submission via Google Workspace SMTP API
-  async function handleSendEmail(e?: React.FormEvent) {
+  async function handleSendEmail(e?: FormEvent) {
     if (e) e.preventDefault();
     if (!validateForm()) {
       return;
@@ -132,7 +143,6 @@ export default function ContactPage() {
       // Success verified by Google Workspace SMTP
       setSubmitSuccess({
         messageId: result.messageId,
-        timestamp: result.timestamp,
         recipient: result.recipient || COMPANY_INFO.email.address,
       });
 
@@ -161,44 +171,52 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-12">
+    <div className="min-h-screen bg-[#F6F8FB] pb-8">
       {/* Hero Banner */}
-      <section className="bg-vmdark text-white py-12 md:py-14 mb-8 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B1E33] via-[#12314D]/90 to-[#0B1E33] pointer-events-none" />
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl space-y-3 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-vmgold/20 text-vmgold border border-vmgold/30 text-xs font-bold uppercase tracking-wider">
+      <section className="relative bg-gradient-to-b from-white to-[#F6F8FB] text-[#0B1E33] py-6 md:py-8 mb-6 overflow-hidden border-b border-slate-200">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-vmgold to-transparent" />
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl space-y-2.5 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-vmgold/15 text-[#B88219] border border-vmgold/40 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="h-4 w-4" />
-            <span>24/7 HELPLINE & OPERATIONS</span>
+            <span>24/7 HELPLINE &amp; OPERATIONS</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">CONTACT VM SQUARE</h1>
-          <p className="text-slate-300 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#0B1E33]">
+            CONTACT VM SQUARE
+          </h1>
+          <span className="mx-auto block h-1 w-16 rounded-full bg-vmgold" />
+          <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             Get in touch with our operations desk, request emergency response teams, or discuss site security deployment across Karnataka.
           </p>
         </div>
       </section>
 
       <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-          
-          {/* Left Column: Direct Contact Info & WhatsApp CTA */}
-          <div className="lg:col-span-5">
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-5">
-              <h2 className="text-xl font-extrabold text-vmdark">Get In Touch</h2>
-              <p className="text-slate-600 text-sm leading-relaxed -mt-3">
-                Reach out directly to our 24/7 control room or head office for inquiries, guard deployments, and operational support.
-              </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
 
-              <div className="space-y-4">
+          {/* Left Column: Direct Contact Info */}
+          <div className="lg:col-span-5">
+            <div className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-6 shadow-xl shadow-slate-900/5 space-y-5">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-vmgold to-transparent" />
+
+              <div>
+                <h2 className="text-xl font-extrabold text-[#0B1E33]">Get In Touch</h2>
+                <span className="mt-2 block h-[3px] w-10 rounded-full bg-vmgold" />
+                <p className="text-slate-600 text-sm leading-relaxed mt-3">
+                  Reach out directly to our 24/7 control room or head office for inquiries, guard deployments, and operational support.
+                </p>
+              </div>
+
+              <div className="divide-y divide-slate-100">
                 {/* Clickable Phone */}
-                <div className="flex items-start gap-3.5">
-                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                <div className="group flex items-start gap-4 py-4 first:pt-0">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold transition-transform duration-300 group-hover:scale-110">
                     <Phone className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-vmdark">Phone & 24/7 Helpline</h3>
+                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#B88219]">Phone &amp; 24/7 Helpline</h3>
                     <a
                       href={COMPANY_INFO.phone.tel}
-                      className="text-vmgold hover:text-vmgold-hover font-extrabold text-base block hover:underline"
+                      className="text-[#0B1E33] hover:text-[#B88219] font-extrabold text-base block transition-colors"
                       title="Click to call"
                     >
                       {COMPANY_INFO.phone.display}
@@ -208,15 +226,15 @@ export default function ContactPage() {
                 </div>
 
                 {/* Clickable Email */}
-                <div className="flex items-start gap-3.5">
-                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                <div className="group flex items-start gap-4 py-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold transition-transform duration-300 group-hover:scale-110">
                     <Mail className="h-5 w-5" />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-sm text-vmdark">Official Email Address</h3>
+                  <div className="min-w-0">
+                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#B88219]">Official Email Address</h3>
                     <a
                       href={COMPANY_INFO.email.mailto}
-                      className="text-vmgold hover:text-vmgold-hover font-bold text-sm sm:text-base hover:underline block break-all"
+                      className="text-[#0B1E33] hover:text-[#B88219] font-bold text-sm sm:text-base block break-all transition-colors"
                     >
                       {COMPANY_INFO.email.address}
                     </a>
@@ -224,74 +242,47 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {/* Clickable Address to Google Maps */}
-                <div className="flex items-start gap-3.5">
-                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                {/* Head Office Location */}
+                <div className="group flex items-start gap-4 py-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold transition-transform duration-300 group-hover:scale-110">
                     <MapPin className="h-5 w-5" />
                   </div>
-                  <div className="space-y-1 flex-1">
-                    <h3 className="font-bold text-sm text-vmdark">Head Office Location</h3>
-                    <a
-                      href={COMPANY_INFO.address.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group block text-sm text-slate-700 hover:text-vmgold transition-colors leading-relaxed font-medium"
-                      title="Click to open in Google Maps"
-                    >
-                      <p className="font-bold text-slate-900 group-hover:text-vmgold transition-colors">
-                        {COMPANY_INFO.name}
-                      </p>
+                  <div className="flex-1">
+                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#B88219]">Head Office Location</h3>
+                    <div className="text-sm text-slate-600 leading-relaxed">
+                      <p className="font-bold text-[#0B1E33]">{COMPANY_INFO.name}</p>
                       <p className="mt-0.5">{COMPANY_INFO.address.building},</p>
                       <p>{COMPANY_INFO.address.street},</p>
                       <p>{COMPANY_INFO.address.area}</p>
-                    </a>
-                    <a
-                      href={COMPANY_INFO.address.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs text-vmgold hover:text-vmgold-hover font-bold hover:underline"
-                    >
-                      <Navigation className="h-3.5 w-3.5" />
-                      <span>View on Google Maps &rarr;</span>
-                    </a>
+                    </div>
                   </div>
                 </div>
 
                 {/* Business Hours */}
-                <div className="flex items-start gap-3.5">
-                  <div className="p-2.5 bg-vmgold/15 text-vmgold rounded-xl shrink-0">
+                <div className="group flex items-start gap-4 pt-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold transition-transform duration-300 group-hover:scale-110">
                     <Clock className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-sm text-vmdark">Operating Hours</h3>
+                    <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#B88219]">Operating Hours</h3>
                     <p className="text-xs text-slate-600 mt-0.5 leading-relaxed">
-                      <strong className="text-slate-800">Security Command:</strong> 24 Hours / 7 Days a Week<br />
-                      <strong className="text-slate-800">Administrative Office:</strong> Mon - Sat (9:00 AM - 7:00 PM)
+                      <strong className="text-[#0B1E33]">Security Command:</strong> 24 Hours / 7 Days a Week<br />
+                      <strong className="text-[#0B1E33]">Administrative Office:</strong> Mon - Sat (10:00 AM - 5:00 PM)
                     </p>
                   </div>
                 </div>
-              </div>
-
-              {/* Direct WhatsApp CTA */}
-              <div className="pt-4 border-t border-slate-100">
-                <a
-                  href={`https://wa.me/${COMPANY_INFO.whatsapp.number}?text=${encodeURIComponent("Hello VM SQUARE, I would like to inquire about security services.")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold py-3 px-5 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2.5 min-h-[46px] text-sm"
-                >
-                  <MessageSquare className="h-5 w-5 fill-white" />
-                  <span>Chat With Us On WhatsApp (+91 80732 46094)</span>
-                </a>
               </div>
             </div>
           </div>
 
           {/* Right Column: Contact Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-sm">
-              <h2 className="text-xl font-extrabold text-vmdark mb-1">Send Us A Message</h2>
-              <p className="text-slate-500 text-sm mb-5">
+            <div className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-6 sm:p-7 shadow-xl shadow-slate-900/5">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-vmgold to-transparent" />
+
+              <h2 className="text-xl font-extrabold text-[#0B1E33]">Send Us A Message</h2>
+              <span className="mt-2 block h-[3px] w-10 rounded-full bg-vmgold" />
+              <p className="text-slate-600 text-sm mt-3 mb-5">
                 Fill out the form below. You can send your inquiry directly to our official Google Workspace email or via WhatsApp.
               </p>
 
@@ -302,8 +293,8 @@ export default function ContactPage() {
                   <h3 className="text-2xl font-extrabold text-emerald-950">
                     Enquiry Dispatched Successfully!
                   </h3>
-                  
-                  <div className="bg-white/90 rounded-xl p-4 text-xs text-slate-700 max-w-md mx-auto space-y-1.5 border border-emerald-200 text-left">
+
+                  <div className="bg-white rounded-xl p-4 text-xs text-slate-700 max-w-md mx-auto space-y-1.5 border border-emerald-200 text-left">
                     <p><strong>Official Recipient:</strong> {submitSuccess.recipient || COMPANY_INFO.email.address}</p>
                     <p><strong>Status:</strong> Accepted by Google Workspace Mail Server</p>
                     {submitSuccess.messageId && (
@@ -318,7 +309,7 @@ export default function ContactPage() {
                   <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
                     <Button
                       onClick={handleReset}
-                      className="bg-vmdark text-vmgold font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800 border border-vmgold/30"
+                      className="bg-[#0B1E33] text-vmgold font-bold px-6 py-2.5 rounded-xl hover:bg-[#12314D] hover:text-vmgold border-0 shadow-md"
                     >
                       Send Another Message
                     </Button>
@@ -353,7 +344,7 @@ export default function ContactPage() {
                     </div>
                   )}
 
-                  {/* WhatsApp Status Notice: Explains the WhatsApp Web / App action */}
+                  {/* WhatsApp Status Notice */}
                   {whatsappNotice && (
                     <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs space-y-2">
                       <div className="flex items-start gap-2.5">
@@ -364,7 +355,7 @@ export default function ContactPage() {
                         </div>
                       </div>
 
-                      <div className="p-2.5 bg-white/70 rounded-lg text-[11px] text-slate-600 border border-emerald-200/50 leading-relaxed">
+                      <div className="p-2.5 bg-white rounded-lg text-[11px] text-slate-600 border border-emerald-200/50 leading-relaxed">
                         <strong>Please Note:</strong> Clicking the button pre-fills the message on your screen. You must press the <strong>Send</strong> button inside WhatsApp to deliver it. On desktop, you may need to scan a QR code if not logged in; on mobile, WhatsApp opens in your app.
                       </div>
 
@@ -385,7 +376,7 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label htmlFor="fullName" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                      <label htmlFor="fullName" className={labelClass}>
                         Full Name <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -397,12 +388,12 @@ export default function ContactPage() {
                         value={formData.fullName}
                         onChange={handleInputChange}
                         placeholder="Your full name"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[44px]"
+                        className={inputClass}
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label htmlFor="contactPhone" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                      <label htmlFor="contactPhone" className={labelClass}>
                         Phone Number <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -415,13 +406,13 @@ export default function ContactPage() {
                         value={formData.contactPhone}
                         onChange={handleInputChange}
                         placeholder="10-digit mobile number"
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[44px]"
+                        className={inputClass}
                       />
                     </div>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="contactEmail" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    <label htmlFor="contactEmail" className={labelClass}>
                       Email Address <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -432,30 +423,30 @@ export default function ContactPage() {
                       value={formData.contactEmail}
                       onChange={handleInputChange}
                       placeholder="name@example.com"
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[44px]"
+                      className={inputClass}
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="contactSubject" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    <label htmlFor="contactSubject" className={labelClass}>
                       Subject / Topic
                     </label>
                     <select
                       id="contactSubject"
                       value={formData.contactSubject}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm bg-white transition-all min-h-[44px]"
+                      className={inputClass}
                     >
                       <option value="Request a Quote">Request a Security Quote</option>
                       <option value="General Inquiry">General Security Inquiry</option>
                       <option value="Guard Deployment">Security Guard Deployment</option>
                       <option value="Facility Management">Facility Management Inquiry</option>
-                      <option value="Billing & Invoicing">Billing & Compliance</option>
+                      <option value="Billing & Invoicing">Billing &amp; Compliance</option>
                     </select>
                   </div>
 
                   <div className="space-y-1.5">
-                    <label htmlFor="contactMsg" className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                    <label htmlFor="contactMsg" className={labelClass}>
                       Your Message <span className="text-red-500">*</span>
                     </label>
                     <textarea
@@ -467,7 +458,7 @@ export default function ContactPage() {
                       value={formData.contactMsg}
                       onChange={handleInputChange}
                       placeholder="Describe your inquiry, required guard strength, or facility location..."
-                      className="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all"
+                      className={inputClass}
                     />
                   </div>
 
@@ -483,7 +474,7 @@ export default function ContactPage() {
                         type="button"
                         onClick={handleSendEmail}
                         disabled={isSubmitting}
-                        className="w-full py-3 px-4 bg-vmdark hover:bg-slate-800 text-vmgold font-extrabold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 min-h-[48px] border border-vmgold/40 hover:border-vmgold cursor-pointer disabled:opacity-60 text-sm"
+                        className="w-full py-3 px-4 bg-[#0B1E33] hover:bg-[#12314D] text-vmgold font-extrabold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 min-h-[48px] cursor-pointer disabled:opacity-60 text-sm"
                       >
                         {isSubmitting ? (
                           <>
@@ -503,7 +494,7 @@ export default function ContactPage() {
                         type="button"
                         onClick={handleSendWhatsApp}
                         disabled={isSubmitting}
-                        className="w-full py-3 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 min-h-[48px] cursor-pointer disabled:opacity-60 text-sm"
+                        className="w-full py-3 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 min-h-[48px] cursor-pointer disabled:opacity-60 text-sm"
                       >
                         <MessageSquare className="h-5 w-5 fill-white" />
                         <span>SEND VIA WHATSAPP</span>
@@ -512,10 +503,10 @@ export default function ContactPage() {
 
                     <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 gap-2">
                       <span>
-                        ✉️ Official recipient: <strong className="text-slate-800">{COMPANY_INFO.email.address}</strong>
+                        ✉️ Official recipient: <strong className="text-[#0B1E33]">{COMPANY_INFO.email.address}</strong>
                       </span>
                       <span>
-                        💬 Official WhatsApp: <strong className="text-slate-800">{COMPANY_INFO.whatsapp.display}</strong>
+                        💬 Official WhatsApp: <strong className="text-[#0B1E33]">{COMPANY_INFO.whatsapp.display}</strong>
                       </span>
                     </div>
                   </div>
@@ -526,60 +517,23 @@ export default function ContactPage() {
         </div>
 
         {/* Location Map Section */}
-        <div className="mt-6 lg:mt-8 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-100">
-            <div>
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-vmgold/15 text-vmgold rounded-lg">
-                  <MapPin className="h-5 w-5" />
-                </div>
-                <h2 className="text-lg font-bold text-vmdark">Head Office Location Map</h2>
+        <div className="relative overflow-hidden mt-5 lg:mt-6 bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 shadow-xl shadow-slate-900/5 space-y-4">
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-vmgold to-transparent" />
+
+          <div className="pb-3 border-b border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold">
+                <MapPin className="h-5 w-5" />
               </div>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed font-medium">
-                {COMPANY_INFO.address.full}
-              </p>
+              <h2 className="text-lg font-extrabold text-[#0B1E33]">Head Office Location Map</h2>
             </div>
-
-            {/* Map Actions: Copy & Direct Redirection */}
-            <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-              <button
-                type="button"
-                onClick={handleCopyAddress}
-                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
-                  copiedAddress
-                    ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                    : "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300 shadow-xs"
-                }`}
-                title="Copy full address"
-              >
-                {copiedAddress ? (
-                  <>
-                    <Check className="h-4 w-4" />
-                    <span>Address Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-4 w-4" />
-                    <span>Copy Address</span>
-                  </>
-                )}
-              </button>
-
-              <a
-                href={COMPANY_INFO.address.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-extrabold bg-vmdark hover:bg-slate-800 text-vmgold border border-vmgold/40 hover:border-vmgold shadow-md transition-all hover:scale-[1.02]"
-                title="Open location directly in Google Maps"
-              >
-                <ExternalLink className="h-4 w-4" />
-                <span>Open in Google Maps</span>
-              </a>
-            </div>
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+              {COMPANY_INFO.address.full}
+            </p>
           </div>
 
-          {/* Interactive Google Map with Direct Click Overlay */}
-          <div className="relative w-full h-[280px] sm:h-[320px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100 shadow-inner group">
+          {/* Interactive Google Map */}
+          <div className="relative w-full h-[300px] sm:h-[360px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
             <iframe
               title={`VM SQUARE head office location map - ${COMPANY_INFO.address.full}`}
               src={COMPANY_INFO.address.embedUrl}
@@ -590,19 +544,6 @@ export default function ContactPage() {
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
-            {/* Top-Right Direct Google Maps Badge Link */}
-            <div className="absolute top-3 right-3 pointer-events-auto">
-              <a
-                href={COMPANY_INFO.address.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/95 backdrop-blur-md shadow-md text-xs font-extrabold text-vmdark hover:text-vmgold border border-slate-200 transition-all hover:scale-105"
-                title="Redirect to Google Maps navigation"
-              >
-                <Navigation className="h-3.5 w-3.5 text-vmgold" />
-                <span>Navigate on Google Maps</span>
-              </a>
-            </div>
           </div>
         </div>
       </div>

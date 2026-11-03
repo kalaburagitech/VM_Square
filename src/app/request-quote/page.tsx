@@ -1,17 +1,40 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { ShieldCheck, CheckCircle2, PhoneCall, Mail, Building2, MapPin, Users, FileText, User, MessageSquare, AlertCircle, RefreshCw } from "lucide-react";
+import { useState, useRef, type ChangeEvent, type FormEvent } from "react";
+import {
+  ShieldCheck,
+  CheckCircle2,
+  PhoneCall,
+  Mail,
+  Building2,
+  MapPin,
+  Users,
+  FileText,
+  User,
+  MessageSquare,
+  AlertCircle,
+  RefreshCw,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/lib/company-info";
-import { ENQUIRY_LIMITS as L, PHONE_ERROR, PHONE_INPUT_PATTERN, buildWhatsAppUrl, checkFormFields, isValidPhone } from "@/lib/enquiry-validation";
+import {
+  ENQUIRY_LIMITS as L,
+  PHONE_ERROR,
+  PHONE_INPUT_PATTERN,
+  buildWhatsAppUrl,
+  checkFormFields,
+  isValidPhone,
+} from "@/lib/enquiry-validation";
+
+const labelClass = "text-sm font-bold text-[#0B1E33] flex items-center gap-1.5";
+const inputClass =
+  "w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-[#0B1E33] placeholder:text-slate-400 focus:border-vmgold focus:ring-2 focus:ring-vmgold/30 outline-none text-sm transition-all min-h-[48px]";
 
 export default function RequestQuotePage() {
   const formRef = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState<{
     messageId?: string;
-    timestamp?: string;
     recipient?: string;
   } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -30,7 +53,7 @@ export default function RequestQuotePage() {
     honeypot: "",
   });
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+  function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
     e.target.setCustomValidity("");
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -85,7 +108,7 @@ export default function RequestQuotePage() {
     );
   }
 
-  async function handleSendEmail(e?: React.FormEvent) {
+  async function handleSendEmail(e?: FormEvent) {
     if (e) e.preventDefault();
     if (!validateForm()) {
       return;
@@ -129,7 +152,6 @@ export default function RequestQuotePage() {
       // Success confirmed by server
       setSubmitSuccess({
         messageId: result.messageId,
-        timestamp: result.timestamp,
         recipient: result.recipient || COMPANY_INFO.email.address,
       });
 
@@ -160,23 +182,29 @@ export default function RequestQuotePage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-20">
+    <div className="min-h-screen bg-[#F6F8FB] pb-10">
       {/* Header Banner */}
-      <section className="bg-vmdark text-white py-16 mb-12 relative overflow-hidden">
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl space-y-4 relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-vmgold/20 text-vmgold border border-vmgold/30 text-xs font-bold uppercase tracking-wider">
+      <section className="relative bg-gradient-to-b from-white to-[#F6F8FB] text-[#0B1E33] pt-28 pb-8 md:pt-32 md:pb-10 mb-8 overflow-hidden border-b border-slate-200">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-vmgold to-transparent" />
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl space-y-3 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-vmgold/15 text-[#B88219] border border-vmgold/40 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="h-4 w-4" />
             <span>CUSTOMIZED SECURITY ESTIMATE</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">REQUEST A FREE QUOTE</h1>
-          <p className="text-slate-300 text-base md:text-lg max-w-2xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0B1E33]">
+            REQUEST A FREE QUOTE
+          </h1>
+          <span className="mx-auto block h-1 w-16 rounded-full bg-vmgold" />
+          <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
             Tell us about your facility and security requirements. Our operations team will provide a tailored quote within 24 hours.
           </p>
         </div>
       </section>
 
       <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-xl p-6 sm:p-10 md:p-12">
+        <div className="relative overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-900/5 p-6 sm:p-8 md:p-10">
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-vmgold to-transparent" />
+
           {/* Success Screen: Shown ONLY when server confirms message acceptance */}
           {submitSuccess ? (
             <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-8 text-center space-y-4 my-4">
@@ -185,7 +213,7 @@ export default function RequestQuotePage() {
                 Quote Request Dispatched Successfully!
               </h2>
 
-              <div className="bg-white/90 rounded-xl p-4 text-xs text-slate-700 max-w-md mx-auto space-y-1.5 border border-emerald-200 text-left">
+              <div className="bg-white rounded-xl p-4 text-xs text-slate-700 max-w-md mx-auto space-y-1.5 border border-emerald-200 text-left">
                 <p><strong>Official Recipient:</strong> {submitSuccess.recipient || COMPANY_INFO.email.address}</p>
                 <p><strong>Status:</strong> Accepted by Google Workspace Mail Server</p>
                 {submitSuccess.messageId && (
@@ -200,14 +228,14 @@ export default function RequestQuotePage() {
               <div className="flex flex-col sm:flex-row gap-3 justify-center pt-3">
                 <Button
                   onClick={handleReset}
-                  className="bg-vmdark text-vmgold font-bold px-6 py-2.5 rounded-xl hover:bg-slate-800 border border-vmgold/30"
+                  className="bg-[#0B1E33] text-vmgold font-bold px-6 py-2.5 rounded-xl hover:bg-[#12314D] hover:text-vmgold border-0 shadow-md"
                 >
                   Submit Another Request
                 </Button>
               </div>
             </div>
           ) : (
-            <form ref={formRef} onSubmit={handleSendEmail} className="space-y-6">
+            <form ref={formRef} onSubmit={handleSendEmail} className="space-y-5">
               {/* Honeypot Spam Trap */}
               <div className="hidden" aria-hidden="true">
                 <input
@@ -245,7 +273,7 @@ export default function RequestQuotePage() {
                     </div>
                   </div>
 
-                  <div className="p-2.5 bg-white/70 rounded-lg text-[11px] text-slate-600 border border-emerald-200/50 leading-relaxed">
+                  <div className="p-2.5 bg-white rounded-lg text-[11px] text-slate-600 border border-emerald-200/50 leading-relaxed">
                     <strong>Please Note:</strong> Clicking the button pre-fills the quote details on your screen. You must press the <strong>Send</strong> button inside WhatsApp to deliver it. On desktop, you may need to scan a QR code if not logged in; on mobile, WhatsApp opens in your app.
                   </div>
 
@@ -264,17 +292,19 @@ export default function RequestQuotePage() {
                 </div>
               )}
 
-              <div className="border-b border-slate-100 pb-4 mb-6">
-                <h2 className="text-2xl font-extrabold text-vmdark">Facility & Security Requirements</h2>
-                <p className="text-slate-500 text-xs sm:text-sm">Fields marked with <span className="text-red-500">*</span> are required.</p>
+              <div className="pb-4 border-b border-slate-100">
+                <h2 className="text-2xl font-extrabold text-[#0B1E33]">Facility &amp; Security Requirements</h2>
+                <span className="mt-2 block h-[3px] w-10 rounded-full bg-vmgold" />
+                <p className="text-slate-500 text-xs sm:text-sm mt-3">
+                  Fields marked with <span className="text-red-500">*</span> are required.
+                </p>
               </div>
 
               {/* 2 Column Grid Desktop, 1 Column Mobile */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {/* 1. Name */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="name" className={labelClass}>
                     <User className="h-4 w-4 text-vmgold" />
                     Full Name / Contact Person <span className="text-red-500">*</span>
                   </label>
@@ -288,13 +318,12 @@ export default function RequestQuotePage() {
                     value={formData.name}
                     onChange={handleInputChange}
                     placeholder="Enter your name"
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm transition-all min-h-[48px]"
+                    className={inputClass}
                   />
                 </div>
 
-                {/* 2. Company */}
                 <div className="space-y-2">
-                  <label htmlFor="company" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="company" className={labelClass}>
                     <Building2 className="h-4 w-4 text-vmgold" />
                     Company / Organization Name
                   </label>
@@ -306,13 +335,12 @@ export default function RequestQuotePage() {
                     value={formData.company}
                     onChange={handleInputChange}
                     placeholder="e.g. Apex Tech Park Ltd"
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm transition-all min-h-[48px]"
+                    className={inputClass}
                   />
                 </div>
 
-                {/* 3. Phone */}
                 <div className="space-y-2">
-                  <label htmlFor="phone" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="phone" className={labelClass}>
                     <PhoneCall className="h-4 w-4 text-vmgold" />
                     Phone Number <span className="text-red-500">*</span>
                   </label>
@@ -327,13 +355,12 @@ export default function RequestQuotePage() {
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="10-digit mobile number"
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm transition-all min-h-[48px]"
+                    className={inputClass}
                   />
                 </div>
 
-                {/* 4. Email */}
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="email" className={labelClass}>
                     <Mail className="h-4 w-4 text-vmgold" />
                     Email Address <span className="text-red-500">*</span>
                   </label>
@@ -346,13 +373,12 @@ export default function RequestQuotePage() {
                     value={formData.email}
                     onChange={handleInputChange}
                     placeholder="name@company.com"
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm transition-all min-h-[48px]"
+                    className={inputClass}
                   />
                 </div>
 
-                {/* 5. Service */}
                 <div className="space-y-2">
-                  <label htmlFor="service" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="service" className={labelClass}>
                     <ShieldCheck className="h-4 w-4 text-vmgold" />
                     Service Required <span className="text-red-500">*</span>
                   </label>
@@ -362,22 +388,21 @@ export default function RequestQuotePage() {
                     required
                     value={formData.service}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm bg-white transition-all min-h-[48px]"
+                    className={inputClass}
                   >
                     <option value="">Select Service Required</option>
                     <option value="Manned Guarding">Manned Guarding</option>
                     <option value="Corporate Security">Corporate Security</option>
                     <option value="Industrial Security">Industrial Security</option>
                     <option value="Residential Security">Residential Township Security</option>
-                    <option value="Event Security">Event & Crowd Security</option>
-                    <option value="Facility Management">Facility Management & Housekeeping</option>
-                    <option value="Electronic Security">Electronic CCTV & Access Control</option>
+                    <option value="Event Security">Event &amp; Crowd Security</option>
+                    <option value="Facility Management">Facility Management &amp; Housekeeping</option>
+                    <option value="Electronic Security">Electronic CCTV &amp; Access Control</option>
                   </select>
                 </div>
 
-                {/* 6. Location */}
                 <div className="space-y-2">
-                  <label htmlFor="location" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="location" className={labelClass}>
                     <MapPin className="h-4 w-4 text-vmgold" />
                     Facility Location <span className="text-red-500">*</span>
                   </label>
@@ -391,13 +416,12 @@ export default function RequestQuotePage() {
                     value={formData.location}
                     onChange={handleInputChange}
                     placeholder="e.g. Whitefield, Bengaluru"
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm transition-all min-h-[48px]"
+                    className={inputClass}
                   />
                 </div>
 
-                {/* 7. Number of Security Personnel */}
                 <div className="space-y-2 md:col-span-2">
-                  <label htmlFor="personnelCount" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="personnelCount" className={labelClass}>
                     <Users className="h-4 w-4 text-vmgold" />
                     Estimated Security Guards / Personnel Count <span className="text-red-500">*</span>
                   </label>
@@ -407,7 +431,7 @@ export default function RequestQuotePage() {
                     required
                     value={formData.personnelCount}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm bg-white transition-all min-h-[48px]"
+                    className={inputClass}
                   >
                     <option value="">Select Number of Personnel</option>
                     <option value="1-5 Guards">1 - 5 Guards</option>
@@ -417,9 +441,8 @@ export default function RequestQuotePage() {
                   </select>
                 </div>
 
-                {/* 8. Message */}
                 <div className="space-y-2 md:col-span-2">
-                  <label htmlFor="message" className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                  <label htmlFor="message" className={labelClass}>
                     <FileText className="h-4 w-4 text-vmgold" />
                     Additional Project Details / Site Notes
                   </label>
@@ -431,25 +454,24 @@ export default function RequestQuotePage() {
                     value={formData.message}
                     onChange={handleInputChange}
                     placeholder="Provide information regarding property size, shift timings, specific risk factors..."
-                    className="w-full px-4 py-3.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-vmdark focus:border-vmdark outline-none text-sm transition-all"
+                    className={inputClass}
                   />
                 </div>
 
               </div>
 
               {/* Dual Action Buttons */}
-              <div className="pt-4 space-y-3">
+              <div className="pt-2 space-y-3">
                 <p className="text-xs font-bold uppercase tracking-wider text-slate-600">
                   Select Submission Channel:
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Email Button */}
                   <button
                     type="button"
                     onClick={handleSendEmail}
                     disabled={isSubmitting}
-                    className="w-full py-4 px-4 bg-vmdark hover:bg-slate-800 text-vmgold font-extrabold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] border border-vmgold/40 hover:border-vmgold cursor-pointer disabled:opacity-60 text-sm"
+                    className="w-full py-3.5 px-4 bg-[#0B1E33] hover:bg-[#12314D] text-vmgold font-extrabold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] cursor-pointer disabled:opacity-60 text-sm"
                   >
                     {isSubmitting ? (
                       <>
@@ -464,12 +486,11 @@ export default function RequestQuotePage() {
                     )}
                   </button>
 
-                  {/* WhatsApp Button */}
                   <button
                     type="button"
                     onClick={handleSendWhatsApp}
                     disabled={isSubmitting}
-                    className="w-full py-4 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] cursor-pointer disabled:opacity-60 text-sm hover:scale-[1.01]"
+                    className="w-full py-3.5 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white font-extrabold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 min-h-[52px] cursor-pointer disabled:opacity-60 text-sm hover:scale-[1.01]"
                   >
                     <MessageSquare className="h-5 w-5 fill-white" />
                     <span>SEND VIA WHATSAPP</span>
@@ -478,10 +499,10 @@ export default function RequestQuotePage() {
 
                 <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-500 pt-1 gap-2">
                   <span>
-                    ✉️ Official recipient: <strong className="text-slate-800">{COMPANY_INFO.email.address}</strong>
+                    ✉️ Official recipient: <strong className="text-[#0B1E33]">{COMPANY_INFO.email.address}</strong>
                   </span>
                   <span>
-                    💬 Official WhatsApp: <strong className="text-slate-800">{COMPANY_INFO.whatsapp.display}</strong>
+                    💬 Official WhatsApp: <strong className="text-[#0B1E33]">{COMPANY_INFO.whatsapp.display}</strong>
                   </span>
                 </div>
               </div>

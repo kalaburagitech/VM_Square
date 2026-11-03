@@ -1,67 +1,91 @@
-import { Search, ShieldAlert, Zap, Lock } from "lucide-react";
+import { ScanSearch, ClipboardList, Users, Eye } from "lucide-react";
 
 const steps = [
   {
-    icon: Search,
+    icon: ScanSearch,
     title: "Assess",
-    description: "Comprehensive vulnerability and risk assessment of your current infrastructure."
+    description: "Comprehensive vulnerability and risk assessment of your current infrastructure.",
   },
   {
-    icon: ShieldAlert,
+    icon: ClipboardList,
     title: "Plan",
-    description: "Developing tailored security protocols and emergency response plans."
+    description: "Developing tailored security protocols and emergency response plans.",
   },
   {
-    icon: Zap,
+    icon: Users,
     title: "Deploy",
-    description: "Implementing advanced technology and dispatching trained personnel."
+    description: "Implementing advanced technology and dispatching trained personnel.",
   },
   {
-    icon: Lock,
+    icon: Eye,
     title: "Monitor",
-    description: "24/7 continuous surveillance and real-time threat neutralization."
-  }
+    description: "24/7 continuous surveillance and real-time threat neutralization.",
+  },
 ];
-
 export function SecurityOperations() {
   return (
-    <section className="py-10 md:py-12 bg-[#F6F8FB] border-t border-slate-200">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-8 space-y-3">
-          <div className="space-y-2">
-            <p className="text-xs font-bold tracking-wider text-vmgold uppercase">
+    <section className="border-t border-slate-200 bg-[#F6F8FB] py-12 sm:py-14 lg:py-20">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10">
+        {/* Header */}
+        <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12 lg:mb-16">
+          <div className="mb-3 flex items-center justify-center gap-3">
+            <span className="h-[2px] w-6 bg-vmgold sm:w-10" />
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#B88219] sm:text-sm">
               Operational Methodology
             </p>
-            <h2 className="text-2xl md:text-3xl font-extrabold text-vmdark">
-              How We Secure Your World
-            </h2>
-            <p className="text-sm md:text-base text-slate-600 leading-relaxed">
-              Our proven four-step operational framework ensures no detail is overlooked and maximum protection is deployed efficiently.
-            </p>
+            <span className="h-[2px] w-6 bg-vmgold sm:w-10" />
           </div>
+          <h2 className="text-3xl font-extrabold tracking-tight text-[#0B1E33] sm:text-4xl lg:text-5xl">
+            How We Secure <span className="text-vmgold">Your World</span>
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
+            Our proven four-step operational framework ensures no detail is overlooked and maximum protection is deployed efficiently.
+          </p>
         </div>
 
-        <div className="relative">
-          {/* Connecting line for desktop */}
-          <div className="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-300 -translate-y-1/2 z-0" />
+        {/* Steps: vertical on mobile, 2 columns on tablet, 4 columns with a timeline on desktop */}
+        <ol className="relative grid grid-cols-1 gap-10 sm:gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-14 lg:grid-cols-4 lg:gap-x-8">
+          {/* Mobile vertical line */}
+          <span className="absolute bottom-10 left-8 top-10 w-px bg-gradient-to-b from-vmgold via-slate-300 to-slate-200 sm:left-10 md:hidden" />
+          {/* Desktop horizontal line */}
+          <span className="absolute left-[12.5%] right-[12.5%] top-12 hidden h-px bg-gradient-to-r from-vmgold via-slate-300 to-vmgold lg:block" />
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 md:gap-8 relative z-10">
-            {steps.map((step, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center text-center bg-white p-4 sm:p-7 rounded-2xl shadow-sm border border-slate-200/80 relative group hover:-translate-y-2 hover:shadow-lg transition-all duration-300"
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            return (
+              <li
+                key={step.title}
+                className="group relative flex items-start gap-5 sm:gap-6 lg:flex-col lg:items-center lg:gap-0 lg:text-center"
               >
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-vmnavy text-vmgold rounded-2xl flex items-center justify-center mb-4 shadow-md group-hover:scale-110 transition-transform">
-                  <step.icon size={28} />
+                {/* Node */}
+                <div className="relative z-10 shrink-0">
+                  <span className="flex h-16 w-16 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold shadow-xl ring-4 ring-[#F6F8FB] transition-all duration-300 group-hover:scale-110 group-hover:bg-vmgold group-hover:text-[#0B1E33] sm:h-20 sm:w-20 lg:h-24 lg:w-24 lg:ring-8">
+                    <Icon className="h-7 w-7 sm:h-9 sm:w-9 lg:h-11 lg:w-11" />
+                  </span>
+                  <span className="absolute -right-1 -top-1 flex h-7 w-7 items-center justify-center rounded-full bg-vmgold text-xs font-extrabold text-[#0B1E33] ring-2 ring-[#F6F8FB] transition-colors duration-300 group-hover:bg-[#0B1E33] group-hover:text-vmgold sm:h-8 sm:w-8 sm:text-sm lg:h-9 lg:w-9 lg:text-base">
+                    {index + 1}
+                  </span>
                 </div>
-                <h3 className="text-base sm:text-xl font-bold text-vmdark mb-2">{step.title}</h3>
-                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+
+                {/* Content */}
+                <div className="relative min-w-0 flex-1 lg:mt-8 lg:flex-none">
+                  <span className="pointer-events-none absolute -top-4 left-0 select-none text-7xl font-extrabold leading-none text-slate-200/70 sm:text-8xl lg:-top-10 lg:left-1/2 lg:-translate-x-1/2 lg:text-9xl">
+                    0{index + 1}
+                  </span>
+                  <div className="relative">
+                    <h3 className="text-xl font-extrabold text-[#0B1E33] transition-colors duration-300 group-hover:text-[#B88219] sm:text-2xl lg:text-3xl">
+                      {step.title}
+                    </h3>
+                    <span className="mb-3 mt-3 block h-1 w-10 rounded-full bg-vmgold transition-all duration-300 group-hover:w-20 lg:mx-auto" />
+                    <p className="text-base leading-relaxed text-slate-600 lg:mx-auto lg:max-w-[260px]">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

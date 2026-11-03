@@ -48,9 +48,6 @@ export function Header() {
           : "bg-white shadow-sm border-slate-200 py-3.5"
       }`}
     >
-      {/* Thin gold accent line at the very top */}
-      <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-vmgold to-transparent" />
-
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Company Logo */}

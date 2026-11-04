@@ -20,16 +20,16 @@ const common = {
 const { props: desktopImg } = getImageProps({ ...common, sizes: "100vw" });
 const { props: mobileImg } = getImageProps({
   ...common,
-  sizes: "(max-width: 768px) 100vw, 90vw",
+  sizes: "(max-width: 768px) 100vw, 95vw",
 });
 
 export function Hero() {
   return (
     <section className="relative min-h-[68vh] sm:min-h-[72vh] lg:min-h-[76vh] flex items-center bg-white text-[#0B1E33] overflow-hidden">
-      {/* Desktop/Laptop (lg+): Full-bleed Hero Image on the right with smooth fade to white on the left */}
-      <div className="hidden lg:block absolute inset-0 z-0 overflow-hidden">
+      {/* Large laptop/desktop (xl, 1280px+): Full-bleed Hero Image on the right with smooth fade to white on the left */}
+      <div className="hidden xl:block absolute inset-0 z-0 overflow-hidden">
         <picture>
-          <source media="(max-width: 1023px)" srcSet={BLANK} />
+          <source media="(max-width: 1279px)" srcSet={BLANK} />
           <img {...desktopImg} alt={HERO_ALT} className="object-cover object-right" />
         </picture>
         {/* Soft horizontal gradient so text is crisp on the left and the image is bright on the right */}
@@ -58,18 +58,17 @@ export function Hero() {
           {/* Gold accent bar */}
           <span className="block h-1 w-16 rounded-full bg-vmgold" />
 
-          {/* Mobile & Tablet Dedicated Image Showcase (visible on mobile & tablet, hidden on laptop) */}
-          <div className="block lg:hidden relative w-full h-[220px] sm:h-[300px] md:h-[360px] rounded-2xl overflow-hidden shadow-xl border border-slate-200/90 bg-slate-900 group my-3">
-            <picture>
-              <source media="(min-width: 1024px)" srcSet={BLANK} />
-              <img
-                {...mobileImg}
-                alt={HERO_ALT}
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-              />
-            </picture>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E33]/85 via-transparent to-transparent pointer-events-none" />
-            <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-white/95 backdrop-blur-md px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-white/50 shadow-md flex items-center justify-between gap-2">
+          {/* Mobile & Tablet Dedicated Image Showcase (mobile, tablet and small laptops below 1280px) */}
+          {/* The box uses the photo's own aspect ratio (2170x725) so the full image is shown uncropped
+              at every width; the caption sits below the photo instead of covering it. */}
+          <div className="block xl:hidden w-full rounded-2xl overflow-hidden shadow-xl border border-slate-200/90 bg-[#0B1E33] my-3">
+            <div className="relative w-full aspect-[2170/725]">
+              <picture>
+                <source media="(min-width: 1280px)" srcSet={BLANK} />
+                <img {...mobileImg} alt={HERO_ALT} className="object-cover object-center" />
+              </picture>
+            </div>
+            <div className="bg-white px-3.5 py-2 sm:px-4 sm:py-2.5 flex items-center justify-between gap-2">
               <div className="min-w-0">
                 <span className="text-[10px] sm:text-xs font-black text-vmgold uppercase tracking-wider block">
                   On-Site Security Operations

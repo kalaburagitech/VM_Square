@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { COMPANY_INFO, SITE_URL } from "@/lib/company-info";
-import { SITE_NAME } from "@/lib/seo";
+import { DEFAULT_OG_IMAGE, SITE_NAME } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,20 +14,15 @@ const geistSans = Geist({
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Security & Manpower Services in Bengaluru | VM SQUARE",
+    default: "Security Agency in Bengaluru & Karnataka | VM SQUARE",
     template: "%s | VM SQUARE",
   },
   description:
-    "Bengaluru-based security guard, corporate, industrial and apartment security, and housekeeping services across Karnataka. Enquiries welcome from across India.",
+    "Bengaluru-based security and manpower company: trained security guards, industrial, office and apartment security, and housekeeping across Karnataka.",
+  applicationName: SITE_NAME,
   keywords: [
     "Security Services Bengaluru",
     "Security Guard Agency Bangalore",
@@ -42,32 +38,23 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    title: "Security & Manpower Services in Bengaluru | VM SQUARE",
+    title: "Security Agency in Bengaluru & Karnataka | VM SQUARE",
     description:
-      "Bengaluru-based security guard, corporate, industrial and apartment security, and housekeeping services across Karnataka.",
+      "Bengaluru-based security and manpower company: trained security guards, industrial, office and apartment security, and housekeeping across Karnataka.",
     siteName: SITE_NAME,
-    images: [
-      {
-        url: "/images/hero_background2.jpg",
-        width: 1200,
-        height: 630,
-        alt: "VM SQUARE Security & Manpower Personnel",
-      },
-    ],
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Security & Manpower Services in Bengaluru | VM SQUARE",
-    description: "Bengaluru-based security guard, corporate, industrial and apartment security, and housekeeping services across Karnataka.",
-    images: ["/images/hero_background2.jpg"],
+    title: "Security Agency in Bengaluru & Karnataka | VM SQUARE",
+    description:
+      "Bengaluru-based security and manpower company: trained security guards, industrial, office and apartment security, and housekeeping across Karnataka.",
+    images: [DEFAULT_OG_IMAGE.url],
   },
+  // Favicon comes from src/app/icon.png (file convention); a small dedicated apple-touch icon avoids
+  // shipping the 2688px wordmark to iOS home screens.
   icons: {
-    icon: [
-      { url: "/logo-icon-transparent.png", type: "image/png" },
-      { url: "/favicon.ico" },
-    ],
-    shortcut: "/logo-icon-transparent.png",
-    apple: "/logo-transparent.png",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
 };
 
@@ -77,13 +64,16 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "SecurityService",
+      // "SecurityService" is not a schema.org type, so search engines ignored it; LocalBusiness is the valid type
+      "@type": "LocalBusiness",
       "@id": `${SITE_URL}/#organization`,
       name: COMPANY_INFO.name,
       alternateName: COMPANY_INFO.shortName,
       url: SITE_URL,
       logo: `${SITE_URL}/logo-transparent.png`,
-      image: `${SITE_URL}/images/hero_background2.jpg`,
+      image: `${SITE_URL}${DEFAULT_OG_IMAGE.url}`,
+      description:
+        "Bengaluru-based security and manpower company providing security guards, corporate, industrial and residential security, event security, CCTV monitoring, housekeeping and facility management across Karnataka.",
       telephone: COMPANY_INFO.phone.raw,
       email: COMPANY_INFO.email.address,
       address: {
@@ -98,6 +88,19 @@ const jsonLd = {
         { "@type": "City", name: "Bengaluru" },
         { "@type": "State", name: "Karnataka" },
       ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: COMPANY_INFO.phone.raw,
+        email: COMPANY_INFO.email.address,
+        contactType: "customer service",
+        areaServed: "IN",
+      },
+      hasMap: COMPANY_INFO.address.googleMapsUrl,
+      // Add the company's official profile URLs here (Google Business Profile, LinkedIn, Facebook, ...)
+      // once confirmed; leave empty rather than guessing.
+      ...(COMPANY_INFO.socialProfiles.length > 0
+        ? { sameAs: COMPANY_INFO.socialProfiles.map((profile) => profile.url) }
+        : {}),
     },
     {
       "@type": "WebSite",
@@ -118,14 +121,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={jsonLd} />
       </head>
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

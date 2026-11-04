@@ -3,24 +3,47 @@ import { Poppins } from "next/font/google";
 import { PhoneCall, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/lib/company-info";
-import { pageMetadata } from "@/lib/seo";
-import { SERVICES } from "@/lib/services-data";
+import { absoluteUrl, pageJsonLd, pageMetadata } from "@/lib/seo";
+import { SERVICES, serviceHref } from "@/lib/services-data";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 const sectionFont = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+  // Only used in a below-the-fold section of this page; don't block first paint on it
+  preload: false,
 });
 
-export const metadata = pageMetadata({
-  title: "Security Guard & Facility Services in Bengaluru",
-  description:
-    "Manned guarding, corporate, industrial, residential and event security, CCTV and housekeeping services for sites in Bengaluru and across Karnataka.",
+const TITLE = "Security & Manpower Services in Karnataka";
+const DESCRIPTION =
+  "Security guards, office, industrial, apartment and event security, CCTV monitoring, housekeeping and facility management for sites in Bengaluru and across Karnataka.";
+
+export const metadata = pageMetadata({ title: TITLE, description: DESCRIPTION, path: "/services" });
+
+const jsonLd = pageJsonLd({
+  name: TITLE,
+  description: DESCRIPTION,
   path: "/services",
+  crumbs: [{ name: "Services", path: "/services" }],
+  extra: [
+    {
+      "@type": "ItemList",
+      name: "VM SQUARE services",
+      itemListElement: SERVICES.map((service, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: service.shortTitle,
+        url: absoluteUrl(serviceHref(service)),
+      })),
+    },
+  ],
 });
 
 export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-[#F6F8FB]">
+      <JsonLd data={jsonLd} />
       {/* Hero Header Banner */}
       <section className="bg-gradient-to-b from-white to-[#F6F8FB] text-[#0A192B] py-8 md:py-10 relative overflow-hidden border-b border-slate-200">
         <div className="container relative z-10 mx-auto px-4 md:px-6 text-center max-w-4xl space-y-3">
@@ -30,8 +53,12 @@ export default function ServicesPage() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#0A192B]">
-            COMPREHENSIVE SECURITY &amp; MANPOWER SERVICES
+            SECURITY &amp; MANPOWER SERVICES IN KARNATAKA
           </h1>
+
+          <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
+            From our office in Bengaluru, VM SQUARE provides security guards, industrial, office and apartment security, event security, CCTV monitoring and housekeeping staff for sites across Karnataka.
+          </p>
 
           <div className="pt-1 flex flex-wrap justify-center gap-3">
             <Link href="/request-quote">
@@ -59,7 +86,7 @@ export default function ServicesPage() {
             Our Core Service Divisions
           </h2>
           <p className="text-slate-600 text-base">
-            Every facility has unique risk profiles. Our security plans are custom-engineered following an initial on-site security audit.
+            Every facility has unique risk profiles. Our security plans are custom-engineered following an initial on-site security audit. Select a service to see what it covers.
           </p>
         </div>
 
@@ -68,9 +95,10 @@ export default function ServicesPage() {
           {SERVICES.map((service) => {
             const Icon = service.icon;
             return (
-              <div
+              <Link
                 key={service.id}
                 id={service.id}
+                href={serviceHref(service)}
                 className="group scroll-mt-28 relative w-full sm:w-[calc(50%-10px)] lg:w-[calc(25%-15px)] cursor-pointer bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col items-center text-center gap-3 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#CD9423] hover:shadow-xl hover:shadow-[#CD9423]/15"
               >
                 {/* Legacy Anchor Compatibility targets (invisible) */}
@@ -90,7 +118,7 @@ export default function ServicesPage() {
                 </h3>
 
                 <span className="h-[3px] w-8 rounded-full bg-[#CD9423] transition-all duration-300 group-hover:w-14" />
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -101,37 +129,37 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 md:divide-x divide-slate-200">
 
-            <div className="group text-center md:px-10">
-              <p className="text-4xl md:text-5xl font-bold tracking-tight text-[#CD9423] transition-transform duration-300 group-hover:scale-105">
+            <div className="group text-center md:px-5 lg:px-10">
+              <p className="text-4xl lg:text-5xl font-bold tracking-tight text-[#CD9423] transition-transform duration-300 group-hover:scale-105">
                 24/7
               </p>
-              <h4 className="mt-1 text-base font-semibold uppercase tracking-wider text-[#0B1E33]">
+              <h3 className="mt-1 text-base font-semibold uppercase tracking-wider text-[#0B1E33]">
                 Operations Desk
-              </h4>
+              </h3>
               <p className="mx-auto mt-1.5 max-w-xs text-sm text-slate-600 leading-relaxed">
                 Active monitoring with night patrol supervisors inspecting sites across Bengaluru.
               </p>
             </div>
 
-            <div className="group text-center md:px-10">
-              <p className="text-4xl md:text-5xl font-bold tracking-tight text-[#CD9423] transition-transform duration-300 group-hover:scale-105">
+            <div className="group text-center md:px-5 lg:px-10">
+              <p className="text-4xl lg:text-5xl font-bold tracking-tight text-[#CD9423] transition-transform duration-300 group-hover:scale-105">
                 Verified
               </p>
-              <h4 className="mt-1 text-base font-semibold uppercase tracking-wider text-[#0B1E33]">
+              <h3 className="mt-1 text-base font-semibold uppercase tracking-wider text-[#0B1E33]">
                 Guard Force
-              </h4>
+              </h3>
               <p className="mx-auto mt-1.5 max-w-xs text-sm text-slate-600 leading-relaxed">
                 Police verification, background checks, physical conditioning and fire safety drills.
               </p>
             </div>
 
-            <div className="group text-center md:px-10">
-              <p className="text-4xl md:text-5xl font-bold tracking-tight text-[#CD9423] transition-transform duration-300 group-hover:scale-105">
+            <div className="group text-center md:px-5 lg:px-10">
+              <p className="text-4xl lg:text-5xl font-bold tracking-tight text-[#CD9423] transition-transform duration-300 group-hover:scale-105">
                 Rapid
               </p>
-              <h4 className="mt-1 text-base font-semibold uppercase tracking-wider text-[#0B1E33]">
+              <h3 className="mt-1 text-base font-semibold uppercase tracking-wider text-[#0B1E33]">
                 Deployment
-              </h4>
+              </h3>
               <p className="mx-auto mt-1.5 max-w-xs text-sm text-slate-600 leading-relaxed">
                 Guard strength deployed on short notice for new facilities, events or site handovers.
               </p>

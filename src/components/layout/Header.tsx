@@ -33,9 +33,12 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
+  // Close the mobile menu on navigation (adjusting state during render avoids an extra effect pass)
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setIsMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -59,7 +62,7 @@ export function Header() {
               height={570}
               sizes="(max-width: 640px) 150px, (max-width: 768px) 185px, 200px"
               className="h-8 sm:h-9 md:h-11 w-auto max-w-[150px] sm:max-w-[185px] md:max-w-none object-contain"
-              priority
+              loading="eager"
             />
           </Link>
 

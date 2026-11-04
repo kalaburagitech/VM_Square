@@ -1,6 +1,11 @@
 // Preferred canonical origin (the bare domain 308-redirects here)
 export const SITE_URL = "https://www.vmsquaresecurity.com";
 
+export interface SocialProfile {
+  label: "Facebook" | "Instagram" | "LinkedIn";
+  url: string;
+}
+
 export const COMPANY_INFO = {
   name: "VM SQUARE SECURITY & MANPOWER SERVICES PVT. LTD.",
   shortName: "VM SQUARE",
@@ -29,4 +34,7 @@ export const COMPANY_INFO = {
     googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=KBS+Arcade%2C+East+of+NGEF%2C+Kasturi+Nagar%2C+Bengaluru%2C+Karnataka+560043",
     embedUrl: "https://maps.google.com/maps?q=KBS+Arcade%2C+East+of+NGEF%2C+Kasturi+Nagar%2C+Bengaluru%2C+Karnataka+560043&t=&z=17&ie=UTF8&iwloc=B&output=embed",
   },
+  // Official social profiles. The footer icons and the structured data "sameAs" list only use
+  // entries added here; the footer previously linked to "#" placeholders.
+  socialProfiles: [] as SocialProfile[],
 };

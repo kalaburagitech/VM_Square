@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { SERVICES } from "@/lib/services-data";
+import { SERVICES, serviceHref } from "@/lib/services-data";
 
 type Service = (typeof SERVICES)[number];
 
@@ -66,7 +66,7 @@ function ServiceRow({ service, index }: { service: Service; index: number }) {
       }`}
     >
       <Link
-        href={`/services#${service.id}`}
+        href={serviceHref(service)}
         data-active={active}
         className="group relative flex items-center gap-4 overflow-hidden px-4 py-5 md:px-6 md:py-6"
       >
@@ -111,7 +111,7 @@ export function ServicesPreview() {
               Comprehensive <span className="text-vmgold">Protection Solutions</span>
             </h2>
             <p className="mt-3 max-w-xl text-sm md:text-base leading-relaxed text-slate-600">
-              Every division is planned around your site and managed by supervisors who stay accountable.
+              Security guards, apartment and industrial security, event security, CCTV monitoring and housekeeping for sites in Bengaluru and across Karnataka. Every division is planned around your site and managed by supervisors who stay accountable.
             </p>
           </div>
 

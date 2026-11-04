@@ -4,18 +4,26 @@ import { TechnologyMonitoring } from "@/components/home/TechnologyMonitoring";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Shield, ArrowRight } from "lucide-react";
-import { pageMetadata } from "@/lib/seo";
+import { pageJsonLd, pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata = pageMetadata({
-  title: "Why Choose Our Security Services",
-  description:
-    "How VM SQUARE screens, trains and supervises security personnel for commercial, industrial and residential sites in Bengaluru and Karnataka.",
+const TITLE = "Why Choose VM SQUARE: Trained & Verified Security Guards";
+const DESCRIPTION =
+  "How VM SQUARE screens, trains and supervises security personnel for commercial, industrial and residential sites in Bengaluru and Karnataka.";
+
+export const metadata = pageMetadata({ title: TITLE, absoluteTitle: true, description: DESCRIPTION, path: "/why-choose-us" });
+
+const jsonLd = pageJsonLd({
+  name: TITLE,
+  description: DESCRIPTION,
   path: "/why-choose-us",
+  crumbs: [{ name: "Why Choose Us", path: "/why-choose-us" }],
 });
 
 export default function WhyChooseUsPage() {
   return (
     <div className="bg-slate-50 min-h-screen">
+      <JsonLd data={jsonLd} />
       {/* Hero */}
       <section className="bg-white text-vmdark py-20 relative overflow-hidden border-b border-slate-200">
         <div className="container relative z-10 mx-auto px-4 md:px-6 max-w-4xl text-center space-y-4">
@@ -23,9 +31,9 @@ export default function WhyChooseUsPage() {
             <Shield className="h-4 w-4" />
             <span>EXCELLENCE & DISCIPLINE</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-vmdark">WHY CHOOSE VM SQUARE</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-vmdark">WHY CHOOSE VM SQUARE SECURITY</h1>
           <p className="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">
-            Delivering robust security standards, rigorously trained manpower, and modern technology integration to safeguard what matters most.
+            Police-verified, trained security guards, supervised shifts and a 24/7 operations desk for sites in Bengaluru and across Karnataka.
           </p>
         </div>
       </section>

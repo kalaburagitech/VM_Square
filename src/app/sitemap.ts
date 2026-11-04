@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/company-info";
+import { SERVICES, serviceHref } from "@/lib/services-data";
 
 // Public, indexable, canonical routes only. Keep this list in sync when pages are added or removed.
 // lastModified / changeFrequency / priority are omitted on purpose: we have no accurate values for them.
@@ -7,6 +8,7 @@ const routes = [
   "/",
   "/about",
   "/services",
+  ...SERVICES.map(serviceHref),
   "/gallery",
   "/why-choose-us",
   "/contact",

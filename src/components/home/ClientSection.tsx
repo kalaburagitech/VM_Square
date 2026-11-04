@@ -54,9 +54,9 @@ export function ClientSection() {
       <div className="flex w-full items-center gap-4 px-4 sm:px-8 md:gap-8 lg:px-12">
 
         <div className="relative z-20 shrink-0 bg-white pr-2">
-         <h3 className="whitespace-nowrap text-lg font-extrabold tracking-tight text-[#D99A22] md:text-xl">
+         <h2 className="whitespace-nowrap text-lg font-extrabold tracking-tight text-[#D99A22] md:text-xl">
           Trusted By
-         </h3>
+         </h2>
         </div>
         <div className="relative min-w-0 flex-1 overflow-hidden">
 

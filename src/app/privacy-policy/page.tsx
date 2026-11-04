@@ -41,7 +41,7 @@ export default function PrivacyPolicyPage() {
           </p>
 
           <div className="pt-4">
-            <Link href="/" className="inline-flex items-center gap-2 text-xs font-bold text-vmdark hover:text-vmgold">
+            <Link href="/" className="inline-flex min-h-10 items-center gap-2 text-xs font-bold text-vmdark hover:text-vmgold">
               <ArrowLeft className="h-4 w-4" />
               <span>Return to Home</span>
             </Link>

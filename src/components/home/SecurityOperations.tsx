@@ -44,11 +44,13 @@ export function SecurityOperations() {
         </div>
 
         {/* Steps: vertical on mobile, 2 columns on tablet, 4 columns with a timeline on desktop */}
-        <ol className="relative grid grid-cols-1 gap-10 sm:gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-14 lg:grid-cols-4 lg:gap-x-8">
+        {/* Decorative timeline lines sit beside the list (an <ol> may only contain <li> elements) */}
+        <div className="relative">
           {/* Mobile vertical line */}
-          <span className="absolute bottom-10 left-8 top-10 w-px bg-gradient-to-b from-vmgold via-slate-300 to-slate-200 sm:left-10 md:hidden" />
+          <span aria-hidden="true" className="absolute bottom-10 left-8 top-10 w-px bg-gradient-to-b from-vmgold via-slate-300 to-slate-200 sm:left-10 md:hidden" />
           {/* Desktop horizontal line */}
-          <span className="absolute left-[12.5%] right-[12.5%] top-12 hidden h-px bg-gradient-to-r from-vmgold via-slate-300 to-vmgold lg:block" />
+          <span aria-hidden="true" className="absolute left-[12.5%] right-[12.5%] top-12 hidden h-px bg-gradient-to-r from-vmgold via-slate-300 to-vmgold lg:block" />
+        <ol className="relative grid grid-cols-1 gap-10 sm:gap-12 md:grid-cols-2 md:gap-x-10 md:gap-y-14 lg:grid-cols-4 lg:gap-x-8">
 
           {steps.map((step, index) => {
             const Icon = step.icon;
@@ -86,6 +88,7 @@ export function SecurityOperations() {
             );
           })}
         </ol>
+        </div>
       </div>
     </section>
   );

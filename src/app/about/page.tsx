@@ -1,23 +1,46 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Target,
   Shield,
   Award,
   ArrowRight,
 } from "lucide-react";
-import { pageMetadata } from "@/lib/seo";
+import { SITE_URL } from "@/lib/company-info";
+import { absoluteUrl, pageJsonLd, pageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata = pageMetadata({
-  title: "About Our Security & Manpower Company",
-  description:
-    "VM SQUARE Security & Manpower Services Pvt. Ltd. is a Bengaluru-based provider of trained security personnel and facility support across Karnataka.",
+const TITLE = "About VM SQUARE Security & Manpower Services, Bengaluru";
+const DESCRIPTION =
+  "VM SQUARE Security & Manpower Services Pvt. Ltd. is a Bengaluru-based company providing trained security personnel and facility support across Karnataka.";
+
+export const metadata = pageMetadata({ title: TITLE, absoluteTitle: true, description: DESCRIPTION, path: "/about" });
+
+const FOUNDER_PHOTO = "/images/about/drakshayani-founder-vm-square.jpg";
+const FOUNDER_ALT = "Drakshayani, Founder and Managing Director of VM SQUARE Security & Manpower Services";
+
+const jsonLd = pageJsonLd({
+  name: TITLE,
+  description: DESCRIPTION,
   path: "/about",
+  crumbs: [{ name: "About", path: "/about" }],
+  type: "AboutPage",
+  // The founder appears only on this page; the organization node itself stays in the root layout
+  extra: [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/about#founder`,
+      name: "Drakshayani",
+      jobTitle: "Founder & Managing Director",
+      image: absoluteUrl(FOUNDER_PHOTO),
+      worksFor: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
 });
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#F6F8FB]">
+      <JsonLd data={jsonLd} />
       {/* Hero Header Banner */}
       <section className="bg-gradient-to-b from-white to-[#F6F8FB] text-[#0B1E33] py-8 md:py-10 relative overflow-hidden border-b border-slate-200">
         <div className="container relative z-10 mx-auto px-4 md:px-6 text-center max-w-4xl space-y-3">
@@ -27,18 +50,88 @@ export default function AboutPage() {
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#0B1E33]">
-            ABOUT VM SQUARE
+            ABOUT VM SQUARE SECURITY &amp; MANPOWER SERVICES
           </h1>
 
           <span className="mx-auto block h-1 w-16 rounded-full bg-vmgold" />
 
           <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-            VM SQUARE Security &amp; Manpower Services Pvt. Ltd. delivers disciplined guarding, electronic CCTV surveillance, and specialized facility management across Karnataka.
+            VM SQUARE Security &amp; Manpower Services Pvt. Ltd. is a security and manpower company in Bengaluru, delivering disciplined guarding, electronic CCTV surveillance, and specialized facility management across Karnataka.
           </p>
         </div>
       </section>
 
-      {/* Main Company Story & Mission */}
+      {/* Founder's Vision */}
+      <section className="py-10 md:py-14 bg-white border-b border-slate-200" aria-labelledby="founders-vision">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+
+            {/* Photograph: shown at its original 3:4 aspect ratio, never upscaled past its native size */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-end">
+              <figure className="relative w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[360px]">
+                <span aria-hidden="true" className="pointer-events-none absolute -left-2 -top-2 h-12 w-12 rounded-tl-2xl border-l-4 border-t-4 border-vmgold" />
+                <span aria-hidden="true" className="pointer-events-none absolute -bottom-2 -right-2 h-12 w-12 rounded-br-2xl border-b-4 border-r-4 border-vmgold" />
+                <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-xl shadow-slate-900/10">
+                  <Image
+                    src={FOUNDER_PHOTO}
+                    alt={FOUNDER_ALT}
+                    width={429}
+                    height={571}
+                    sizes="(max-width: 640px) 300px, (max-width: 1024px) 340px, 360px"
+                    // Visible as soon as the page opens (largest element on mobile), so load it straight away
+                    loading="eager"
+                    fetchPriority="high"
+                    className="h-auto w-full"
+                  />
+                </div>
+              </figure>
+            </div>
+
+            {/* Vision content (wording supplied by the company; keep it verbatim) */}
+            <div className="lg:col-span-7 space-y-5">
+              <div className="space-y-2">
+                <div className="flex items-center gap-3">
+                  <span className="h-[2px] w-8 bg-vmgold" />
+                  <p className="text-xs font-bold uppercase tracking-wider text-[#B88219]">
+                    Leadership
+                  </p>
+                </div>
+                <h2 id="founders-vision" className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#0B1E33]">
+                  Founder&apos;s Vision
+                </h2>
+                <span className="block h-1 w-16 rounded-full bg-vmgold" />
+              </div>
+
+              <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
+                <p>
+                  Built on over 15 years of industry experience, VM Square was founded with a vision to bring greater accountability, professionalism and reliability to security and facility management services.
+                </p>
+                <p>
+                  We believe in strong field leadership, trained manpower, timely response and genuine employee care.
+                </p>
+                <p>
+                  Our goal is to build lasting client partnerships by delivering what matters most &ndash; dependable people and consistent service.
+                </p>
+              </div>
+
+              {/* Signature statement */}
+              <p className="rounded-r-xl border-l-4 border-vmgold bg-[#F6F8FB] px-5 py-4 text-lg md:text-xl font-extrabold tracking-tight text-[#0B1E33]">
+                Committed to Service. <span className="text-[#B88219]">Driven by Trust.</span>
+              </p>
+
+              <div className="pt-1">
+                <p className="text-xl font-extrabold text-[#0B1E33]">Drakshayani</p>
+                <p className="text-sm font-bold uppercase tracking-wider text-[#B88219]">
+                  Founder &amp; Managing Director
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* How We Work: services covered and operating standards */}
       <section className="py-8 md:py-10 container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
 
@@ -47,46 +140,36 @@ export default function AboutPage() {
               <div className="flex items-center gap-3">
                 <span className="h-[2px] w-8 bg-vmgold" />
                 <p className="text-xs font-bold uppercase tracking-wider text-[#B88219]">
-                  Our Corporate Identity
+                  What We Do
                 </p>
               </div>
               <h2 className="text-2xl md:text-3xl font-extrabold text-[#0B1E33] leading-tight">
-                Pioneering Professional Security &amp; Manpower Solutions
+                How We Work
               </h2>
             </div>
 
             <p className="text-slate-600 text-sm md:text-base leading-relaxed">
-              Founded in Bengaluru, <strong className="text-[#0B1E33]">VM SQUARE SECURITY &amp; MANPOWER SERVICES PVT. LTD.</strong> was established to bridge the gap between traditional security guarding and modern enterprise risk management. We combine strictly vetted security personnel with proactive supervisor audits, robust gatehouse registers, and 24/7 command operations.
+              Our work covers <Link href="/services/security-guard-services" className="font-semibold text-[#0B1E33] underline decoration-vmgold underline-offset-2 hover:text-[#B88219]">security guard services</Link>,{" "}
+              <Link href="/services/industrial-security" className="font-semibold text-[#0B1E33] underline decoration-vmgold underline-offset-2 hover:text-[#B88219]">industrial security</Link>,{" "}
+              <Link href="/services/apartment-security" className="font-semibold text-[#0B1E33] underline decoration-vmgold underline-offset-2 hover:text-[#B88219]">apartment and gated community security</Link>{" "}
+              and <Link href="/services/housekeeping-facility-management" className="font-semibold text-[#0B1E33] underline decoration-vmgold underline-offset-2 hover:text-[#B88219]">housekeeping and facility management</Link>{" "}
+              for sites in Bengaluru and across Karnataka.
             </p>
 
             <p className="text-slate-600 text-sm md:text-base leading-relaxed">
               Whether safeguarding high-density corporate tech parks, securing heavy industrial factories, or managing gated residential communities, our operations are driven by formal Standard Operating Procedures (SOPs) and disciplined accountability.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-              <div className="group bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2 transition-all duration-300 hover:-translate-y-1 hover:border-vmgold hover:shadow-lg hover:shadow-vmgold/15">
-                <div className="flex items-center gap-2.5 text-[#0B1E33] font-bold">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold transition-transform duration-300 group-hover:scale-110">
-                    <Target className="h-4 w-4" />
-                  </span>
-                  <span>Our Mission</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  To provide absolute safety, asset protection, and operational peace of mind to our clients through thoroughly vetted personnel and technology-driven vigilance.
-                </p>
+            <div className="group bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2 transition-all duration-300 hover:-translate-y-1 hover:border-vmgold hover:shadow-lg hover:shadow-vmgold/15">
+              <div className="flex items-center gap-2.5 text-[#0B1E33] font-bold">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold transition-transform duration-300 group-hover:scale-110">
+                  <Award className="h-4 w-4" />
+                </span>
+                <span>Quality Standards</span>
               </div>
-
-              <div className="group bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2 transition-all duration-300 hover:-translate-y-1 hover:border-vmgold hover:shadow-lg hover:shadow-vmgold/15">
-                <div className="flex items-center gap-2.5 text-[#0B1E33] font-bold">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0B1E33] text-vmgold transition-transform duration-300 group-hover:scale-110">
-                    <Award className="h-4 w-4" />
-                  </span>
-                  <span>Quality Standards</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Structured operational protocols with background verification, regular drills, shift briefings, and time-stamped perimeter patrol logs.
-                </p>
-              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Structured operational protocols with background verification, regular drills, shift briefings, and time-stamped perimeter patrol logs.
+              </p>
             </div>
           </div>
 

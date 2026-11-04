@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { COMPANY_INFO } from "@/lib/company-info";
+import { LazyMapEmbed } from "@/components/contact/LazyMapEmbed";
 import {
   ENQUIRY_LIMITS as L,
   PHONE_ERROR,
@@ -181,11 +182,11 @@ export default function ContactPage() {
             <span>24/7 HELPLINE &amp; OPERATIONS</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight text-[#0B1E33]">
-            CONTACT VM SQUARE
+            CONTACT VM SQUARE SECURITY
           </h1>
           <span className="mx-auto block h-1 w-16 rounded-full bg-vmgold" />
           <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-            Get in touch with our operations desk, request emergency response teams, or discuss site security deployment across Karnataka.
+            Get in touch with our Bengaluru operations desk, request emergency response teams, or discuss security guard and manpower deployment across Karnataka.
           </p>
         </div>
       </section>
@@ -216,7 +217,7 @@ export default function ContactPage() {
                     <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#B88219]">Phone &amp; 24/7 Helpline</h3>
                     <a
                       href={COMPANY_INFO.phone.tel}
-                      className="text-[#0B1E33] hover:text-[#B88219] font-extrabold text-base block transition-colors"
+                      className="text-[#0B1E33] hover:text-[#B88219] font-extrabold text-base block py-1 transition-colors"
                       title="Click to call"
                     >
                       {COMPANY_INFO.phone.display}
@@ -234,7 +235,7 @@ export default function ContactPage() {
                     <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#B88219]">Official Email Address</h3>
                     <a
                       href={COMPANY_INFO.email.mailto}
-                      className="text-[#0B1E33] hover:text-[#B88219] font-bold text-sm sm:text-base block break-all transition-colors"
+                      className="text-[#0B1E33] hover:text-[#B88219] font-bold text-sm sm:text-base block break-all py-1 transition-colors"
                     >
                       {COMPANY_INFO.email.address}
                     </a>
@@ -533,18 +534,11 @@ export default function ContactPage() {
           </div>
 
           {/* Interactive Google Map */}
-          <div className="relative w-full h-[300px] sm:h-[360px] rounded-xl overflow-hidden border border-slate-200 bg-slate-100">
-            <iframe
-              title={`VM SQUARE head office location map - ${COMPANY_INFO.address.full}`}
-              src={COMPANY_INFO.address.embedUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+          <LazyMapEmbed
+            title={`VM SQUARE head office location map - ${COMPANY_INFO.address.full}`}
+            src={COMPANY_INFO.address.embedUrl}
+            directionsUrl={COMPANY_INFO.address.googleMapsUrl}
+          />
         </div>
       </div>
     </div>

@@ -192,11 +192,11 @@ export default function RequestQuotePage() {
             <span>CUSTOMIZED SECURITY ESTIMATE</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#0B1E33]">
-            REQUEST A FREE QUOTE
+            REQUEST A SECURITY &amp; MANPOWER QUOTE
           </h1>
           <span className="mx-auto block h-1 w-16 rounded-full bg-vmgold" />
           <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-            Tell us about your facility and security requirements. Our operations team will provide a tailored quote within 24 hours.
+            Tell us about your facility and your security guard, housekeeping or facility staff requirements. Our operations team will provide a tailored quote within 24 hours.
           </p>
         </div>
       </section>

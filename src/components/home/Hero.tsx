@@ -1,20 +1,37 @@
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+
+const HERO_SRC = "/images/hero_background2.jpg";
+const HERO_ALT = "VM SQUARE Security Personnel and Command Surveillance";
+
+// 1x1 transparent GIF: lets each <picture> skip downloading on the breakpoint where it is hidden,
+// so the hero photo is fetched exactly once per viewport (desktop backdrop OR mobile card).
+const BLANK = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+
+const common = {
+  src: HERO_SRC,
+  alt: HERO_ALT,
+  fill: true,
+  loading: "eager",
+  fetchPriority: "high",
+} as const;
+
+const { props: desktopImg } = getImageProps({ ...common, sizes: "100vw" });
+const { props: mobileImg } = getImageProps({
+  ...common,
+  sizes: "(max-width: 768px) 100vw, 90vw",
+});
 
 export function Hero() {
   return (
     <section className="relative min-h-[68vh] sm:min-h-[72vh] lg:min-h-[76vh] flex items-center bg-white text-[#0B1E33] overflow-hidden">
       {/* Desktop/Laptop (lg+): Full-bleed Hero Image on the right with smooth fade to white on the left */}
       <div className="hidden lg:block absolute inset-0 z-0 overflow-hidden">
-        <Image
-          src="/images/hero_background2.jpg"
-          alt="VM SQUARE Security Personnel and Command Surveillance"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-right"
-        />
+        <picture>
+          <source media="(max-width: 1023px)" srcSet={BLANK} />
+          <img {...desktopImg} alt={HERO_ALT} className="object-cover object-right" />
+        </picture>
         {/* Soft horizontal gradient so text is crisp on the left and the image is bright on the right */}
         <div
           className="absolute inset-0 pointer-events-none bg-gradient-to-r from-white from-35% via-white/85 via-50% to-transparent to-85%"
@@ -23,19 +40,19 @@ export function Hero() {
 
       <div className="container relative z-10 mx-auto px-4 md:px-6 py-8 sm:py-12 lg:py-16">
         <div className="max-w-3xl space-y-4 sm:space-y-5">
-          {/* Brand Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-vmdark">
-            <span className="flex h-2 w-2 rounded-full bg-vmgold animate-pulse" />
-            <span className="uppercase tracking-wider text-[11px] sm:text-xs">
-              VM SQUARE &bull; Security &amp; Manpower Services
+          {/* Main heading: the badge line names the service and location, the tagline follows (same look as before) */}
+          <h1 className="flex flex-col items-start gap-4 sm:gap-5">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-vmdark">
+              <span className="flex h-2 w-2 rounded-full bg-vmgold animate-pulse" aria-hidden="true" />
+              <span className="uppercase tracking-wider text-[11px] sm:text-xs">
+                Security Agency in Bengaluru &bull; Security &amp; Manpower Services
+              </span>
             </span>
-          </div>
-
-          {/* Main Headline */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-tight text-[#0B1E33]">
-            Protecting People. Securing Places.{" "}
-            <br className="hidden md:block" />
-            <span className="text-vmgold">Supporting Businesses.</span>
+            <span className="block text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-tight text-[#0B1E33]">
+              Protecting People. Securing Places.{" "}
+              <br className="hidden md:block" />
+              <span className="text-vmgold">Supporting Businesses.</span>
+            </span>
           </h1>
 
           {/* Gold accent bar */}
@@ -43,14 +60,14 @@ export function Hero() {
 
           {/* Mobile & Tablet Dedicated Image Showcase (visible on mobile & tablet, hidden on laptop) */}
           <div className="block lg:hidden relative w-full h-[220px] sm:h-[300px] md:h-[360px] rounded-2xl overflow-hidden shadow-xl border border-slate-200/90 bg-slate-900 group my-3">
-            <Image
-              src="/images/hero_background2.jpg"
-              alt="VM SQUARE Security Personnel and Command Surveillance"
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 800px"
-              className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-            />
+            <picture>
+              <source media="(min-width: 1024px)" srcSet={BLANK} />
+              <img
+                {...mobileImg}
+                alt={HERO_ALT}
+                className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+              />
+            </picture>
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1E33]/85 via-transparent to-transparent pointer-events-none" />
             <div className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-4 sm:right-4 bg-white/95 backdrop-blur-md px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl border border-white/50 shadow-md flex items-center justify-between gap-2">
               <div className="min-w-0">
@@ -69,7 +86,7 @@ export function Hero() {
 
           {/* Description */}
           <p className="max-w-2xl text-sm sm:text-base md:text-lg text-slate-700 leading-relaxed font-medium">
-            Reliable security and manpower solutions across Karnataka. From corporate buildings and residential communities to industrial facilities and events, we help protect people, property and daily operations with disciplined personnel and professional supervision.
+            VM SQUARE Security &amp; Manpower Services is a Bengaluru-based security agency providing trained security guards, industrial and apartment security, event security and housekeeping staff across Karnataka. From corporate buildings and residential communities to factories and events, we help protect people, property and daily operations with disciplined personnel and professional supervision.
           </p>
 
           {/* Call-to-Action Buttons */}
